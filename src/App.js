@@ -4,30 +4,19 @@ import {
     Button,
     ButtonGroup,
     Container,
-    createTheme,
     CssBaseline,
     Grid,
     IconButton,
     MuiThemeProvider,
-    responsiveFontSizes,
     Toolbar,
     Typography
 } from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import AroundAgreementType from "./panels/AroundAgreementType";
-import AroundCountry from "./panels/AroundCountry";
-import AroundRepresentative from "./panels/AroundRepresentative";
-
-
-let theme = createTheme({
-    palette: {
-        primary: {
-            main: 'rgba(79,162,0,0.88)'
-        }
-    }
-});
-theme = responsiveFontSizes(theme);
+import AroundAgreementType from "./panels/old/AroundAgreementType";
+import AroundCountry from "./panels/old/AroundCountry";
+import AroundRepresentative from "./panels/old/AroundRepresentative";
+import theme from "./utils/theme";
 
 const useStyles = makeStyles((theme) => ({
     root: {

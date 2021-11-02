@@ -13,10 +13,10 @@ import {
 } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import API from "../utils/API";
-import OutlinedDiv from "../components/OutlinedDiv";
-import CustomMap from "../components/CustomMap";
-import CompanyData from "../components/CompanyData";
+import API from "../../utils/API";
+import OutlinedDiv from "../../components/old/OutlinedDiv";
+import CustomMap from "../../components/old/CustomMap";
+import CompanyData from "../../components/old/CompanyData";
 
 const useStyles = makeStyles((theme) => ({
     content: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
             paddingRight: 0,
         },
     },
-    representativePicker: {
+    countryPicker: {
         [theme.breakpoints.down('sm')]: {
             marginBottom: 12,
         },
@@ -53,16 +53,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const AroundRepresentative = () => {
+const AroundCountry = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const classes = useStyles()
     const api = API
 
-    const [allRepresentatives, setAllRepresentatives] = useState([])
-    const [representative, setRepresentative] = useState(null)
-    const [representativesLoaded, setRepresentativesLoaded] = useState(false)
+    const [allCountries, setAllCountries] = useState([])
+    const [country, setCountry] = useState(null)
+    const [countriesLoaded, setCountriesLoaded] = useState(false)
 
     const [companiesList, setCompaniesList] = useState([])
     const [company, setCompany] = useState(null)
@@ -74,14 +74,14 @@ const AroundRepresentative = () => {
     const map = useRef(null);
     const objectManager = useRef(null)
 
-    //Получение всех ответственных лиц в ТПУ
+    //Получение всех стран
     //Запускается только при первом рендере
     useEffect(() => {
-        api.get('/representatives/')
+        api.get('/countries/')
             .then((response) => {
-                let representatives = response.data // setAllCountries(response.data) не работает
-                setAllRepresentatives(representatives)
-                setRepresentativesLoaded(true)
+                let countries = response.data // setAllCountries(response.data) не работает
+                setAllCountries(countries)
+                setCountriesLoaded(true)
             })
             .catch(error => {
                 console.error(error)
@@ -104,10 +104,10 @@ const AroundRepresentative = () => {
     //Запускается при изменении стейта country (при выборе страны)
     useEffect(() => {
         setCompaniesLoaded(false)
-        let representativeID = allRepresentatives.find(item => item.second_name + ' ' + item.first_name === representative)?.id
+        let countryID = allCountries.find(item => item.name === country)?.id
         let tempCompaniesList = []
-        if (representativeID)
-            api.get(`/companies/?id_representative=${representativeID}`)
+        if (countryID)
+            api.get(`/companies/?id_country=${countryID}`)
                 .then(response => {
                     for (let company of response.data) {
                         tempCompaniesList.push({
@@ -124,7 +124,7 @@ const AroundRepresentative = () => {
                     console.error(error)
                 })
         // eslint-disable-next-line
-    }, [representative])
+    }, [country])
 
     return (
         <div className={classes.content}>
@@ -133,19 +133,19 @@ const AroundRepresentative = () => {
                     <Grid item xs={12} md={4} style={{paddingRight: 0}}>
                         <Autocomplete
                             id="combo-box-demo-country"
-                            options={allRepresentatives.map((representative) => representative.second_name + ' ' + representative.first_name)}
-                            renderInput={(params) => <TextField {...params} label="Ответственный в ТПУ" variant="outlined"/>}
+                            options={allCountries.map((country) => country.name)}
+                            renderInput={(params) => <TextField {...params} label="Страна" variant="outlined"/>}
                             onChange={(event, newValue, reason) => {
                                 // Выбор страны и очищение при нажатии на крестик
-                                setRepresentative(newValue)
+                                setCountry(newValue)
                                 if (reason === "clear") {
                                     setCompaniesList([])
                                 }
                             }}
                             openText='Раскрыть'
-                            className={classes.representativePicker}
+                            className={classes.countryPicker}
                             renderOption={(option) =>
-                                representativesLoaded
+                                countriesLoaded
                                     ? <Typography noWrap> {option} </Typography>
                                     : <CircularProgress/>
                             }
@@ -156,19 +156,21 @@ const AroundRepresentative = () => {
                                 options={companiesList.map((company) => company.name)}
                                 renderInput={(params) => <TextField {...params} label="Организация"
                                                                     variant="outlined"/>}
-                                onChange={(event, newValue, reason) => {
+                                onChange={(event, newValue) => {
                                     // Выбор компании, центрирование и вывод данных о договорах
-                                    for (let comp of companiesList) {
-                                        if (newValue === comp.name) {
-                                            setCompany(comp.name)
-                                            setCenterCoords(comp.coords)
-                                            map.current.setCenter(comp.coords)
-                                            map.current.setZoom(12)
+                                    for (let company of companiesList) {
+                                        if (newValue === company.name) {
+                                            setCompany(company.name)
+                                            if (company.coords) {
+                                                setCenterCoords(company.coords)
+                                                map.current.setCenter(company.coords)
+                                                map.current.setZoom(12)
+                                            }
                                             break;
                                         }
                                     }
                                 }}
-                                disabled={!representative}
+                                disabled={!country}
                                 renderOption={(option) => companiesLoaded ? <Typography noWrap> {option} </Typography> :
                                     <CircularProgress/>}
                                 openText='Раскрыть'
@@ -207,7 +209,7 @@ const AroundRepresentative = () => {
                                     // Если компании грузятся - CircularProgress, если не начинали - ничего
                                     :
                                     <div>
-                                        {representative ? <CircularProgress/> : <div style={{paddingBottom: 430}}/>}
+                                        {country ? <CircularProgress/> : <div style={{paddingBottom: 430}}/>}
                                     </div>
                                 }
                             </OutlinedDiv>
@@ -230,4 +232,4 @@ const AroundRepresentative = () => {
     )
 };
 
-export default AroundRepresentative
+export default AroundCountry

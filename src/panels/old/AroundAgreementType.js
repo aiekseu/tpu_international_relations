@@ -12,10 +12,10 @@ import {
     useTheme, withStyles
 } from "@material-ui/core";
 
-import API from "../utils/API";
-import CustomMap from "../components/CustomMap";
-import CompanyData from "../components/CompanyData";
-import MobileCheckboxesDialog from "../components/MobileCheckboxesDialog";
+import API from "../../utils/API";
+import CustomMap from "../../components/old/CustomMap";
+import CompanyData from "../../components/old/CompanyData";
+import MobileCheckboxesDialog from "../../components/old/MobileCheckboxesDialog";
 
 const useStyles = makeStyles((theme) => ({
     content: {

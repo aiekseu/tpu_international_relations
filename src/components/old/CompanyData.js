@@ -3,7 +3,7 @@ import {Accordion, AccordionDetails, AccordionSummary, LinearProgress, Typograph
 import {makeStyles} from "@material-ui/core/styles";
 import {DataGrid, GridColDef, GridOverlay} from '@material-ui/data-grid';
 
-import API from "../utils/API";
+import API from "../../utils/API";
 import {renderCellExpand} from "./renderCellExpand";
 
 
