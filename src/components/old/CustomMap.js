@@ -36,6 +36,7 @@ const CustomMap = ({companiesList, centerCoords, map, objectManager, setCompany}
             // Используем айдишник для того, чтобы далее получить инфу по метке
             const objectId = e.get('objectId');
             const organizationName = objectManager.current.objects.getById(objectId)?.properties.clusterCaption
+            navigator.clipboard.writeText(organizationName)
             setCompany(organizationName)
         })
 
