@@ -1,9 +1,9 @@
-import {createTheme, responsiveFontSizes} from "@material-ui/core";
+import {createTheme, responsiveFontSizes} from "@mui/material";
 
 let theme = createTheme({
     palette: {
         primary: {
-            main: 'rgba(79,162,0,0.88)'
+            main: 'rgba(205,240,170,0.61)'
         }
     }
 });
