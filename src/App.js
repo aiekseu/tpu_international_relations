@@ -1,15 +1,10 @@
 import React from 'react';
 import {
-    AppBar,
-    Button, Container,
     CssBaseline,
     ThemeProvider,
-    Toolbar,
-    Typography
 } from "@mui/material";
 import theme from "./utils/theme";
-import tpuDarkIcon from './images/tpuDarkLogo.svg';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import Header from "./components/header";
 // import {
 //     AppBar,
 //     Button,
@@ -123,32 +118,11 @@ const App = () => {
     // }
 
     return (
+
         <React.Fragment>
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
-                <AppBar position="static" elevation={0} >
-                    <Container maxWidth='xl' sx={classes.upperAppBar}>
-                        <Container maxWidth='lg'>
-                            <Toolbar variant='dense'>
-                                <Typography sx={classes.upperAppBarDate} variant='subtitle2'>
-                                    1 ноября 2021, четная неделя
-                                </Typography>
-                                <Typography sx={classes.upperAppBarScheduleLink} variant='subtitle2'>
-                                    <CalendarTodayIcon sx={{ fontSize: '0.9rem'}}/> Расписание
-                                </Typography>
-                            </Toolbar>
-                        </Container>
-                    </Container>
-                    <Container maxWidth='lg'>
-                        <Toolbar>
-                            <img src={tpuDarkIcon} style={classes.menuButton} alt="ТПУ"/>
-                            <Typography variant="h5" sx={classes.title}>
-                                Международные связи ТПУ
-                            </Typography>
-                            <Button color="inherit">Login</Button>
-                        </Toolbar>
-                    </Container>
-                </AppBar>
+                <Header />
                 {/*    <main>*/}
                 {/*        <div className={classes.content}>*/}
                 {/*            <Container maxWidth="lg">*/}
