@@ -1,5 +1,16 @@
+
+
+const classes = {
+    root: {
+        height: window.innerHeight,
+        backgroundColor: 'yellow',
+    }
+}
+
 const NewCustomMap = () => {
-    return <div></div>
+    return <div style={classes.root}>
+
+    </div>
 }
 
 export default NewCustomMap

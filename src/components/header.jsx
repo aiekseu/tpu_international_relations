@@ -1,5 +1,5 @@
 import React from "react";
-import {AppBar, Button, Container, Grid, IconButton, Link, Toolbar, Typography} from "@mui/material";
+import {AppBar, Container, Grid, IconButton, Link, Toolbar, Typography} from "@mui/material";
 
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import SearchIcon from '@mui/icons-material/Search';
@@ -11,6 +11,8 @@ import navigationDotActive from '../images/navigationDotActive.svg'
 import navigationDotInactive from '../images/navigationDotInactive.svg'
 
 import theme from "../utils/theme";
+
+import {observer} from "mobx-react-lite";
 
 const classes = {
     root: {
@@ -57,6 +59,9 @@ const classes = {
         fontFamily: "'Montserrat', sans-serif",
         fontWeight: 500
     },
+    appBar: {
+        backgroundColor: 'transparent',
+    },
     menuButton: {
         marginRight: theme.spacing(2),
     },
@@ -91,10 +96,10 @@ const classes = {
     }
 }
 
-const Header = () => {
+const Header = observer(() => {
 
     return (
-        <AppBar position="static" elevation={0}>
+        <AppBar position="static" elevation={0} style={{backgroundColor: 'rgba(205,240,170,0.61)'}}>
             <Container maxWidth={window.innerWidth} sx={classes.upperAppBar} style={{padding: 0}}>
                 <Container maxWidth='lg'>
                     <Toolbar variant='dense'>
@@ -119,7 +124,7 @@ const Header = () => {
                     </Toolbar>
                 </Container>
             </Container>
-            <Container maxWidth='lg'>
+            <Container maxWidth='lg' sx={classes.appBar}>
                 <Toolbar>
                     <img src={tpuDarkIcon} style={classes.menuButton} alt="ТПУ"/>
                     <Typography sx={classes.title}>
@@ -162,6 +167,6 @@ const Header = () => {
             </Container>
         </AppBar>
     );
-}
+})
 
 export default Header;

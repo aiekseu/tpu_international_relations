@@ -1,0 +1,11 @@
+
+
+class FiltersStore {
+
+    engineerSchoolsList = [];
+    representativesList = [];
+
+
+
+
+}
