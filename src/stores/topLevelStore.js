@@ -1,5 +1,5 @@
-import { makeAutoObservable } from "mobx"
-import API, {baseURL} from "../utils/API";
+import {makeAutoObservable} from "mobx"
+import {baseURL} from "../utils/API";
 
 class GlobalData {
 

@@ -34,13 +34,6 @@ let theme = createTheme({
                 }
             }
         },
-        MuiCheckbox: {
-            styleOverrides: {
-                checked: {
-
-                }
-            }
-        }
     },
 });
 theme = responsiveFontSizes(theme);

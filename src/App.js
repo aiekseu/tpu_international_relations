@@ -1,11 +1,9 @@
 import React from 'react';
-import {
-    CssBaseline,
-    ThemeProvider,
-} from "@mui/material";
+import {CssBaseline, ThemeProvider,} from "@mui/material";
 import theme from "./utils/theme";
 import Header from "./components/header";
 import Agreements from "./panels/agreementsSec";
+import KPIs from "./panels/kpiSec";
 // import {
 //     AppBar,
 //     Button,
@@ -121,11 +119,11 @@ const App = () => {
 
 
     return (
-
-        <React.Fragment>
+        <>
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
                 <Header />
+                <KPIs />
                 <Agreements />
                 {/*    <main>*/}
                 {/*        <div className={classes.content}>*/}
@@ -163,7 +161,7 @@ const App = () => {
                 {/*        </div>*/}
                 {/*    </main>*/}
             </ThemeProvider>
-        </React.Fragment>
+        </>
     )
 
 };

@@ -1,5 +1,3 @@
-import {Container} from "@mui/material";
-
 import Filters from "../components/filters";
 import NewCustomMap from "../components/map";
 
