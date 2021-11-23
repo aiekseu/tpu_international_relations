@@ -100,7 +100,7 @@ const Header = observer(() => {
 
     return (
         <AppBar position="static" elevation={0} style={{backgroundColor: 'rgba(205,240,170,0.61)'}}>
-            <Container maxWidth={window.innerWidth} sx={classes.upperAppBar} style={{padding: 0}}>
+            <Container sx={classes.upperAppBar} style={{padding: 0, maxWidth: '100%'}}>
                 <Container maxWidth='lg'>
                     <Toolbar variant='dense'>
                         <Typography sx={classes.upperAppBarDate} variant='subtitle2'>

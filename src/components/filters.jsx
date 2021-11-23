@@ -24,8 +24,9 @@ import theme from "../utils/theme";
 
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+// import RootStore from "../stores/rootStore";
 
-import GlobalData from '../stores/topLevelStore'
+import rootStore from '../stores/rootStore'
 
 // Кнопка "поиск"
 const SearchButton = styled(LoadingButton)(({theme}) => ({
@@ -51,13 +52,14 @@ const SearchButton = styled(LoadingButton)(({theme}) => ({
 const classes = {
     root: {
         width: 340,
-        height: window.innerHeight * 0.85,
+        height: window.innerHeight * 0.8,
         marginTop: 4,
         marginLeft: 6,
         paddingTop: 2,
         paddingBottom: 3,
         paddingLeft: 4,
-        paddingRight: 4
+        paddingRight: 4,
+        display: 'flex',
     },
     title: {
         marginLeft: 'auto',
@@ -85,10 +87,9 @@ const classes = {
         fontSize: '0.85rem',
     },
     companiesListDiv: {
-        maxHeight: 300,
         overflow: 'auto',
         border: "1px solid #bdbdbd",
-        borderRadius: 5
+        borderRadius: 5,
     },
     listItem: {
         padding: 0.5,
@@ -100,10 +101,32 @@ const classes = {
     },
 }
 
-// Стор с полученными массивами данных
-const globalData = new GlobalData()
+// const rootStore = new RootStore()
+
+const CompaniesList = observer(() => {
+    return (
+        <List>
+            {rootStore.globalDataStore.companiesList.map((value, index) =>
+                <div key={value.id}>
+                    <ListItem
+                        button
+                        disablePadding
+                        sx={classes.listItem}
+                    >
+                        <ListItemText sx={classes.listItemText} disableTypography>
+                            {value.name}
+                        </ListItemText>
+                    </ListItem>
+                    <Divider/>
+                </div>
+            )
+            }
+        </List>
+    )
+})
 
 const Filters = observer(() => {
+
     return (
         <Paper elevation={3} sx={classes.root}>
             <Stack direction='column'>
@@ -116,7 +139,8 @@ const Filters = observer(() => {
                     id="countryInput"
                     sx={classes.autocomplete}
                     autoHighlight
-                    options={toJS(globalData.countriesList)}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
+                    options={toJS(rootStore.globalDataStore.countriesList)}
                     getOptionLabel={(option) => option.name}
                     noOptionsText={<LinearProgress/>}
                     renderOption={(props, option) => (
@@ -126,15 +150,15 @@ const Filters = observer(() => {
                     )}
                     renderInput={(params) => <TextField {...params} label="Страна"/>}
                     onChange={(event, value) => {
-                        //TODO: выбранная страна в стор
-                        console.log(value)
+                        rootStore.filtersStore.updateCountry(value)
                     }}
                 />
                 <Autocomplete
                     id="schoolInput"
                     sx={classes.autocomplete}
                     autoHighlight
-                    options={toJS(globalData.countriesList)}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
+                    options={toJS(rootStore.globalDataStore.countriesList)}
                     getOptionLabel={(option) => option.name}
                     noOptionsText={<LinearProgress/>}
                     renderOption={(props, option) => (
@@ -144,15 +168,15 @@ const Filters = observer(() => {
                     )}
                     renderInput={(params) => <TextField {...params} label="Инженерная школа"/>}
                     onChange={(event, value) => {
-                        //TODO: выбранная страна в стор
-                        console.log(value)
+                        rootStore.filtersStore.updateEngineeringSchool(value)
                     }}
                 />
                 <Autocomplete
                     id="representativeInput"
                     sx={classes.autocomplete}
                     autoHighlight
-                    options={toJS(globalData.representativesList)}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
+                    options={toJS(rootStore.globalDataStore.representativesList)}
                     getOptionLabel={(option) => option.second_name + ' ' + option.first_name}
                     noOptionsText={<LinearProgress/>}
                     renderOption={(props, option) => (
@@ -162,15 +186,15 @@ const Filters = observer(() => {
                     )}
                     renderInput={(params) => <TextField {...params} label="Ответственный в ТПУ"/>}
                     onChange={(event, value) => {
-                        //TODO: выбранная страна в стор
-                        console.log(value)
+                        rootStore.filtersStore.updateRepresentative(value)
                     }}
                 />
                 <Autocomplete
                     id="agrTypeInput"
                     sx={classes.autocomplete}
                     autoHighlight
-                    options={toJS(globalData.agreementTypesList)}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
+                    options={toJS(rootStore.globalDataStore.agreementTypesList)}
                     getOptionLabel={(option) => option.name}
                     noOptionsText={<LinearProgress/>}
                     renderOption={(props, option) => (
@@ -180,7 +204,7 @@ const Filters = observer(() => {
                     )}
                     renderInput={(params) => <TextField {...params} label="Тип договора"/>}
                     onChange={(event, value) => {
-                        console.log(value)
+                        rootStore.filtersStore.updateAgrType(value)
                     }}
                 />
 
@@ -224,7 +248,13 @@ const Filters = observer(() => {
                 </FormGroup>
 
                 {/*TODO: loading state, ripple border radius*/}
-                <SearchButton variant='outlined' loading={false}>
+                <SearchButton
+                    variant='outlined'
+                    loading={rootStore.globalDataStore.isFetching}
+                    onClick={async () => {
+                        await rootStore.filtersStore.findCompanies()
+                    }}
+                >
                     Поиск
                 </SearchButton>
 
@@ -235,30 +265,15 @@ const Filters = observer(() => {
 
                 <div style={classes.companiesListDiv}>
                     {
-                        (globalData.companiesList.length === 0)
+                        (toJS(rootStore.globalDataStore.companiesList.length === 0))
                             ? <LinearProgress/>
-                            : <List>
-                                {globalData.companiesList.map((value, index) =>
-                                    <div key={value.id}>
-                                        <ListItem
-                                            button
-                                            disablePadding
-                                            sx={classes.listItem}
-                                        >
-                                            <ListItemText sx={classes.listItemText} disableTypography>
-                                                {value.name}
-                                            </ListItemText>
-                                        </ListItem>
-                                        <Divider/>
-                                    </div>
-                                )
-                                }
-                            </List>
+                            : <CompaniesList/>
                     }
                 </div>
             </Stack>
         </Paper>
     )
 })
+
 
 export default Filters

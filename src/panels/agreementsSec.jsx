@@ -22,9 +22,9 @@ const Agreements = () => {
 
     return (
         <div style={classes.root}>
-            <NewCustomMap/>
+            <NewCustomMap />
             <div style={classes.filters}>
-                <Filters/>
+                <Filters />
             </div>
         </div>
     )

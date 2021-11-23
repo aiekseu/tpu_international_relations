@@ -4,119 +4,16 @@ import theme from "./utils/theme";
 import Header from "./components/header";
 import Agreements from "./panels/agreementsSec";
 import KPIs from "./panels/kpiSec";
-// import {
-//     AppBar,
-//     Button,
-//     ButtonGroup,
-//     Container,
-//     CssBaseline,
-//     Grid,
-//     IconButton, ThemeProvider,
-//     Toolbar,
-//     Typography
-// } from "@mui/material";
-// import MenuIcon from '@mui/icons-material/Menu';
-// import AroundAgreementType from "./panels/old/AroundAgreementType";
-// import AroundCountry from "./panels/old/AroundCountry";
-// import AroundRepresentative from "./panels/old/AroundRepresentative";
-//
-// const useStyles = makeStyles((theme) => ({
+import RootStore from "./stores/rootStore";
+
+// const classes = {
 //     root: {
 //         flexGrow: 1,
 //     },
-//     menuButton: {
-//         marginRight: theme.spacing(2),
-//     },
-//     title: {
-//         flexGrow: 1,
-//     },
-//     content: {
-//         padding: theme.spacing(8, 0, 6),
-//     },
-//     sectionTitle: {
-//         marginLeft: 'auto',
-//         marginRight: 'auto',
-//     },
-//     inactiveSectionName: {
-//         color: '#323232'
-//     },
-//     activeSectionName: {
-//         fontWeight: 'bolder',
-//         color: '#323232'
-//     },
-//     statisticCard: {
-//         marginTop: 24
-//     }
-// }));
-
-const classes = {
-    root: {
-        flexGrow: 1,
-    },
-    upperAppBar: {
-        color: 'black',
-        backgroundColor: 'black',
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    upperAppBarDate: {
-        color: 'white',
-        marginRight: theme.spacing(12),
-    },
-    upperAppBarScheduleLink: {
-        color: 'white',
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        flexGrow: 1,
-        color: 'black',
-        fontWeight: 500
-    },
-    content: {
-        padding: theme.spacing(8, 0, 6),
-    },
-    sectionTitle: {
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
-    inactiveSectionName: {
-        color: '#323232'
-    },
-    activeSectionName: {
-        fontWeight: 'bolder',
-        color: '#323232'
-    },
-    statisticCard: {
-        marginTop: 24
-    }
-}
+//
+// }
 
 const App = () => {
-
-    // const classes = useStyles()
-    // const [activeCard, setActiveCard] = useState('representative')
-    //
-    // const getStatisticCard = (activeCard) => {
-    //     switch (activeCard) {
-    //         case 'country': {
-    //             return <AroundCountry/>
-    //         }
-    //         case 'agreement': {
-    //             return <AroundAgreementType/>
-    //         }
-    //         case 'representative': {
-    //             return <AroundRepresentative/>
-    //         }
-    //         default: {
-    //             return <AroundCountry/>
-    //         }
-    //     }
-    // }
-
-
 
     return (
         <>
@@ -124,7 +21,7 @@ const App = () => {
                 <CssBaseline/>
                 <Header />
                 <KPIs />
-                <Agreements />
+                <Agreements/>
                 {/*    <main>*/}
                 {/*        <div className={classes.content}>*/}
                 {/*            <Container maxWidth="lg">*/}

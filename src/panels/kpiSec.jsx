@@ -1,13 +1,11 @@
-import {useState} from "react";
-import {Card, Container, Grid, Paper} from "@mui/material";
+import {Container, Grid, Paper} from "@mui/material";
 import background1 from "../images/Vector.png"
 import background2 from "../images/Vector1.png"
 import icon from "../images/icon (2).svg"
 import icon1 from "../images/icon (1).svg"
 import icon2 from "../images/icon (3).svg"
 import icon3 from "../images/icon (4).svg"
-import API from "../utils/API";
-import GlobalData from "../stores/topLevelStore";
+import GlobalDataStore from "../stores/globalDataStore";
 import {observer} from "mobx-react-lite";
 
 
@@ -120,11 +118,9 @@ function VValidator(value, str1, str2, str3) {
     return ("Error in VValidator")
 }
 
-const globalData = new GlobalData();
+const globalData = new GlobalDataStore();
 
 const KPIs = () => {
-    const [countries, setCountries] = useState('');
-    const api = API
 
     // useEffect(() => {
     //     api.get('/countries/')
@@ -187,8 +183,8 @@ const KPIs = () => {
                     </Grid>
                 </Grid>
 
-                <img style={classes.background} src={background1}/>
-                <img style={classes.background} src={background2}/>
+                <img style={classes.background} src={background1} alt='bg1'/>
+                <img style={classes.background} src={background2} alt='bg2'/>
             </div>
         </div>
     )
@@ -202,7 +198,7 @@ const KPI = ({background, value, text}) => {
                 <div style={classes.value} >{value} </div>
                 <div style={classes.text}> {text} </div>
             </Paper>
-            <img style={classes.img} src={background}/>
+            <img style={classes.img} src={background} alt='kpiBg'/>
         </Container>
     )
 }
