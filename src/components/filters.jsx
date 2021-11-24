@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
     Autocomplete,
     Box,
@@ -57,8 +57,6 @@ const classes = {
     root: {
         width: 340,
         height: windowHeight * 0.8,
-        marginTop: 4,
-        marginLeft: 6,
         paddingTop: 2,
         paddingBottom: 3,
         paddingLeft: 4,
@@ -74,7 +72,7 @@ const classes = {
     },
     hideButton: {
         position: 'absolute',
-        top: 41.5,
+        top: 9.5,
         right: 12.5,
         padding: 0.5,
     },
@@ -120,15 +118,18 @@ const classes = {
 const CompaniesList = observer(() => {
     return (
         <List>
-            {rootStore.globalDataStore.companiesList.map((value, index) =>
-                <div key={value.id}>
+            {rootStore.globalDataStore.companiesList.map((company, index) =>
+                <div key={company.id}>
                     <ListItem
                         button
                         disablePadding
                         sx={classes.listItem}
+                        onClick={() => {
+                            rootStore.filtersStore.setCurrentCompany(company)
+                        }}
                     >
                         <ListItemText sx={classes.listItemText} disableTypography>
-                            {value.name}
+                            {company.name}
                         </ListItemText>
                     </ListItem>
                     <Divider/>
@@ -170,6 +171,7 @@ const Filters = observer(() => {
                     style={hideableStyle}
                     id="countryInput"
                     sx={classes.autocomplete}
+                    key={rootStore.filtersStore.country}
                     autoHighlight
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={toJS(rootStore.globalDataStore.countriesList)}
@@ -184,6 +186,7 @@ const Filters = observer(() => {
                     onChange={(event, value) => {
                         rootStore.filtersStore.updateCountry(value)
                     }}
+                    clearOnBlur={true}
                 />
 
                 {/*Ввод инженерной школы*/}
@@ -192,6 +195,7 @@ const Filters = observer(() => {
                     id="schoolInput"
                     sx={classes.autocomplete}
                     autoHighlight
+                    key={rootStore.filtersStore.country}
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={toJS(rootStore.globalDataStore.countriesList)}
                     getOptionLabel={(option) => option.name}
@@ -213,6 +217,7 @@ const Filters = observer(() => {
                     id="representativeInput"
                     sx={classes.autocomplete}
                     autoHighlight
+                    key={rootStore.filtersStore.representative}
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={toJS(rootStore.globalDataStore.representativesList)}
                     getOptionLabel={(option) => option.second_name + ' ' + option.first_name}
@@ -234,6 +239,7 @@ const Filters = observer(() => {
                     id="agrTypeInput"
                     sx={classes.autocomplete}
                     autoHighlight
+                    key={rootStore.filtersStore.agrType}
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={toJS(rootStore.globalDataStore.agreementTypesList)}
                     getOptionLabel={(option) => option.name}

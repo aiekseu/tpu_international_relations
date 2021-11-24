@@ -14,6 +14,8 @@ class FiltersStore {
 
     isOpen = true;
 
+    countryRef;
+
     rootStore;
 
     constructor(rootStore) {
@@ -55,6 +57,10 @@ class FiltersStore {
         runInAction(() => {
             this.isOpen = !this.isOpen
         })
+    }
+
+    setCurrentCompany(company) {
+        this.rootStore.aboutCompanyStore.setCompany(company)
     }
 }
 
