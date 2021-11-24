@@ -14,7 +14,10 @@ class FiltersStore {
 
     isOpen = true;
 
-    countryRef;
+    countryKey = Math.random();
+    representativeKey = Math.random();
+    engineeringSchoolKey = Math.random();
+    agrTypeKey = Math.random();
 
     rootStore;
 
@@ -25,14 +28,17 @@ class FiltersStore {
 
     updateCountry(country) {
         this.country = country;
+        if (country === null) this.countryKey++;
     }
 
     updateRepresentative(representative) {
         this.representative = representative
+        if (representative === null) this.representativeKey++;
     }
 
     updateAgrType(agrType) {
         this.agrType = agrType
+        if (agrType === null) this.agrTypeKey++;
     }
 
     updateAgrState({agrState, newState}) {
@@ -41,6 +47,7 @@ class FiltersStore {
 
     updateEngineeringSchool(engineeringSchool) {
         this.engineeringSchool = engineeringSchool
+        if (engineeringSchool === null) this.engineeringSchoolKey++;
     }
 
     findCompanies() {

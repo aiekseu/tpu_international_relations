@@ -171,7 +171,7 @@ const Filters = observer(() => {
                     style={hideableStyle}
                     id="countryInput"
                     sx={classes.autocomplete}
-                    key={rootStore.filtersStore.country}
+                    key={rootStore.filtersStore.countryKey}
                     autoHighlight
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={toJS(rootStore.globalDataStore.countriesList)}
@@ -195,7 +195,7 @@ const Filters = observer(() => {
                     id="schoolInput"
                     sx={classes.autocomplete}
                     autoHighlight
-                    key={rootStore.filtersStore.country}
+                    key={rootStore.filtersStore.engineeringSchoolKey}
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={toJS(rootStore.globalDataStore.countriesList)}
                     getOptionLabel={(option) => option.name}
@@ -217,7 +217,7 @@ const Filters = observer(() => {
                     id="representativeInput"
                     sx={classes.autocomplete}
                     autoHighlight
-                    key={rootStore.filtersStore.representative}
+                    key={rootStore.filtersStore.representativeKey}
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={toJS(rootStore.globalDataStore.representativesList)}
                     getOptionLabel={(option) => option.second_name + ' ' + option.first_name}
@@ -239,7 +239,7 @@ const Filters = observer(() => {
                     id="agrTypeInput"
                     sx={classes.autocomplete}
                     autoHighlight
-                    key={rootStore.filtersStore.agrType}
+                    key={rootStore.filtersStore.agrTypeKey}
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={toJS(rootStore.globalDataStore.agreementTypesList)}
                     getOptionLabel={(option) => option.name}
