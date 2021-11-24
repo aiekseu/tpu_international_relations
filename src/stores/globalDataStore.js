@@ -1,6 +1,5 @@
 import {makeAutoObservable, runInAction, toJS} from "mobx"
 import {baseURL} from "../utils/API";
-import rootStore from "./rootStore";
 
 class GlobalDataStore {
 
@@ -52,7 +51,13 @@ class GlobalDataStore {
 
      updateCompanies({country, agrType, engineeringSchool, representative, agrStates}) {
         this.changeFetchingState()
-         fetch(`${baseURL}/companies?id_country=${toJS(country).id}`)
+
+         let countryID = toJS(country).id ?? 'null'
+         let agrTypeID = toJS(agrType).id ?? 'null'
+         let engineeringSchoolID = toJS(engineeringSchool).id ?? 'null'
+         let representativeID = toJS(representative).id ?? 'null'
+
+         fetch(`${baseURL}/companies?id_country=${countryID}`)
             .then(response => response.json())
             .then(json => {
                 runInAction(() => {

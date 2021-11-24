@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 
 class FiltersStore {
 
@@ -15,6 +15,7 @@ class FiltersStore {
     isOpen = true;
 
     rootStore;
+
     constructor(rootStore) {
         makeAutoObservable(this);
         this.rootStore = rootStore;
@@ -40,13 +41,19 @@ class FiltersStore {
         this.engineeringSchool = engineeringSchool
     }
 
-    findCompanies()  {
-         this.rootStore.globalDataStore.updateCompanies({
-            country: this.country,
-            agrType: this.agrType,
-            representative: this.representative,
-            engineeringSchool: this.engineeringSchool,
-            agrStates: this.agrState
+    findCompanies() {
+        this.rootStore.globalDataStore.updateCompanies({
+            country: this.country ?? {},
+            agrType: this.agrType ?? {},
+            representative: this.representative ?? {},
+            engineeringSchool: this.engineeringSchool ?? {},
+            agrStates: this.agrState ?? {}
+        })
+    }
+
+    openOrHideFiltersPanel() {
+        runInAction(() => {
+            this.isOpen = !this.isOpen
         })
     }
 }

@@ -1,10 +1,11 @@
+import React from 'react';
 import {
     Autocomplete,
     Box,
     Checkbox,
     Divider,
     FormControlLabel,
-    FormGroup,
+    FormGroup, IconButton,
     LinearProgress,
     List,
     ListItem,
@@ -14,7 +15,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {LoadingButton} from "@mui/lab";
+import {LoadingButton, Skeleton} from "@mui/lab";
 
 import {observer} from "mobx-react-lite";
 import {toJS} from "mobx";
@@ -24,7 +25,8 @@ import theme from "../utils/theme";
 
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-// import RootStore from "../stores/rootStore";
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import rootStore from '../stores/rootStore'
 
@@ -49,10 +51,12 @@ const SearchButton = styled(LoadingButton)(({theme}) => ({
     marginBottom: '16px',
 }));
 
+const windowHeight = window.innerHeight;
+
 const classes = {
     root: {
         width: 340,
-        height: window.innerHeight * 0.8,
+        height: windowHeight * 0.8,
         marginTop: 4,
         marginLeft: 6,
         paddingTop: 2,
@@ -66,7 +70,13 @@ const classes = {
         marginRight: 'auto',
         fontWeight: 600,
         fontSize: '1.125rem',
-        marginBottom: 1.5
+        marginBottom: 1.5,
+    },
+    hideButton: {
+        position: 'absolute',
+        top: 41.5,
+        right: 12.5,
+        padding: 0.5,
     },
     autocomplete: {
         marginBottom: 1.25
@@ -90,6 +100,7 @@ const classes = {
         overflow: 'auto',
         border: "1px solid #bdbdbd",
         borderRadius: 5,
+        visibility: (rootStore.filtersStore.isOpen) ? 'visible' : 'hidden'
     },
     listItem: {
         padding: 0.5,
@@ -99,6 +110,10 @@ const classes = {
         fontSize: '0.9rem',
         lineHeight: 1.3
     },
+    skeleton: {
+        margin: 0.5,
+        borderRadius: 0.5,
+    }
 }
 
 // Список компаний
@@ -126,15 +141,33 @@ const CompaniesList = observer(() => {
 
 const Filters = observer(() => {
 
+    const hideableStyle = {visibility: (rootStore.filtersStore.isOpen) ? 'visible' : 'hidden'}
+
     return (
-        <Paper elevation={3} sx={classes.root}>
+        <Paper elevation={3} sx={classes.root}
+               style={{height: (rootStore.filtersStore.isOpen) ? windowHeight * 0.8 : 60}}>
             <Stack direction='column'>
+
                 <Typography sx={classes.title}>
                     Поиск договоров
                 </Typography>
 
+                <IconButton
+                    sx={classes.hideButton}
+                    onClick={() => {
+                        rootStore.filtersStore.openOrHideFiltersPanel()
+                    }}
+                >
+                    {
+                        (rootStore.filtersStore.isOpen)
+                            ? <KeyboardArrowUpIcon style={{fontSize: '1.875rem'}}/>
+                            : <KeyboardArrowDownIcon style={{fontSize: '1.875rem'}}/>
+                    }
+                </IconButton>
+
                 {/* Ввод страны */}
                 <Autocomplete
+                    style={hideableStyle}
                     id="countryInput"
                     sx={classes.autocomplete}
                     autoHighlight
@@ -155,6 +188,7 @@ const Filters = observer(() => {
 
                 {/*Ввод инженерной школы*/}
                 <Autocomplete
+                    style={hideableStyle}
                     id="schoolInput"
                     sx={classes.autocomplete}
                     autoHighlight
@@ -175,6 +209,7 @@ const Filters = observer(() => {
 
                 {/* Ввод ответственного в ТПУ*/}
                 <Autocomplete
+                    style={hideableStyle}
                     id="representativeInput"
                     sx={classes.autocomplete}
                     autoHighlight
@@ -195,6 +230,7 @@ const Filters = observer(() => {
 
                 {/* Ввод типов договоров*/}
                 <Autocomplete
+                    style={hideableStyle}
                     id="agrTypeInput"
                     sx={classes.autocomplete}
                     autoHighlight
@@ -214,7 +250,7 @@ const Filters = observer(() => {
                 />
 
                 {/* Чекбоксы */}
-                <FormGroup row>
+                <FormGroup row style={hideableStyle}>
                     <FormControlLabel
                         sx={classes.checkboxesForm}
                         label={<Typography sx={classes.checkboxLabel}>Действует</Typography>}
@@ -252,26 +288,45 @@ const Filters = observer(() => {
                     />
                 </FormGroup>
 
-                {/*TODO: loading state, ripple border radius*/}
+                {/* Кнопка поиска */}
                 <SearchButton
+                    style={hideableStyle}
                     variant='outlined'
                     loading={rootStore.globalDataStore.isFetching}
                     onClick={async () => {
                         await rootStore.filtersStore.findCompanies()
                     }}
+                    TouchRippleProps={{style: {borderRadius: 8}}}
                 >
                     Поиск
                 </SearchButton>
 
-                <Typography sx={classes.title}>
+                <Typography sx={classes.title} style={hideableStyle}>
                     Список компаний
                 </Typography>
 
                 {/* Список компаний */}
-                <div style={classes.companiesListDiv}>
+                <div style={{
+                    overflow: 'auto',
+                    border: "1px solid #bdbdbd",
+                    borderRadius: 5,
+                    visibility: (rootStore.filtersStore.isOpen) ? 'visible' : 'hidden' // необходимо прописать здесь, чтобы было видно стейт
+                }}>
                     {
-                        (toJS(rootStore.globalDataStore.companiesList.length === 0))
-                            ? <LinearProgress/>
+                        (toJS(rootStore.globalDataStore.companiesList.length === 0) || rootStore.globalDataStore.isFetching)
+                            ? <div>
+                                <Skeleton variant='rectangular' height={40} sx={classes.skeleton} />
+                                <Divider />
+                                <Skeleton variant='rectangular' height={60} sx={classes.skeleton} />
+                                <Divider />
+                                <Skeleton variant='rectangular' height={50} sx={classes.skeleton} />
+                                <Divider />
+                                <Skeleton variant='rectangular' height={30} sx={classes.skeleton} />
+                                <Divider />
+                                <Skeleton variant='rectangular' height={40} sx={classes.skeleton} />
+                                <Divider />
+                                <Skeleton variant='rectangular' height={40} sx={classes.skeleton} />
+                            </div>
                             : <CompaniesList/>
                     }
                 </div>
