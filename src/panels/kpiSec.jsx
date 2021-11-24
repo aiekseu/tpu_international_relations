@@ -1,26 +1,28 @@
-import {Container, Grid, Paper} from "@mui/material";
+import {Container, Grid,} from "@mui/material";
 import background1 from "../images/Vector.png"
 import background2 from "../images/Vector1.png"
 import icon from "../images/icon (2).svg"
 import icon1 from "../images/icon (1).svg"
 import icon2 from "../images/icon (3).svg"
 import icon3 from "../images/icon (4).svg"
-import GlobalDataStore from "../stores/globalDataStore";
+import GlobalData from "../stores/globalDataStore";
 import {observer} from "mobx-react-lite";
+import KPI from "../components/KPI";
+import Chip from "../components/chip";
+import rootStore from "../stores/rootStore";
 
 
 const classes = {
     headContainer: {
-        height: "400px",
+        height: "360px",
     },
-    headhead: {
-        margin: "7%"
-    },
-    H: {
+    head: {
+        marginTop: "5%",
+        marginLeft: "3%",
         fontFamily: "'Poppins', sans-serif",
         fontStyle: "normal",
         fontWeight: 'bold',
-        fontSize: '67px',
+        fontSize: '4rem',
         color: '#55802B',
         textShadow: '0px 4px 22px rgba(68, 94, 111, 0.1)',
     },
@@ -31,43 +33,10 @@ const classes = {
         alignItems: "center",
         height: "300px",
         width: "100%",
-
     },
     container: {
-        margin: "7%",
-    },
-    card: {
-        display: "inline-flex",
-        justifyItems: "center",
-        alignContent: "center",
-        height: '84px',
-
-        background: 'rgba(255, 255, 255, 0.65)',
-        boxShadow: '0px 4px 32px rgba(0, 114, 188, 0.2)',
-        borderRadius: '10px',
-    },
-    text: {
-        color: "#163C55",
-        fontFamily: 'Montserrat, sans-serif',
-        marginRight: "4px",
-        whiteSpace: "pre",
-        display: "flex",
-        alignItems: "center",
-        height: "100%",
-        fontSize: "18px",
-        lineHeight: "22px",
-        padding: "10px",
-    },
-    value: {
-        fontStyle: "normal",
-        color: "rgba(23, 61, 85, 0.7)",
-        fontWeight: "500",
-        marginLeft: "10px",
-        marginRight: "10px",
-        display: "flex",
-        alignItems: "center",
-        fontSize: '3.5rem',
-        height: '100%',
+        marginLeft: "1%",
+        marginRight: "1%",
     },
     background: {
         objectFit: "cover",
@@ -78,29 +47,27 @@ const classes = {
         height: "400px",
         bottom: "0",
     },
-    KPI: {
+    searchAgreement: {
+        display: "flex",
         position: "relative",
-        padding: 0,
-        transitionDuration: '200ms',
-        textAlign: 'center',
-        "&:hover": {
-            transform: "scale(1.25)",
-            padding: "0",
-            "img": {
-                opacity: "0.7",
-            }
-        },
+        height: "200px",
     },
-    img: {
-        top: "50%",
-        transform: "translateY(-50%)",
+    searchAgreementText: {
         position: "absolute",
-        right: "50%",
-        marginRight: "-25%",
-        height: "150px",
-        zIndex: "-1",
-        opacity: "0.25",
-        transitionDuration: "200ms",
+        marginLeft: "3%",
+        fontFamily: "'Poppins', sans-serif",
+        fontStyle: "normal",
+        fontWeight: 'bold',
+        fontSize: '3.5rem',
+        color: "#5B5B5B",
+        textShadow: '0px 4px 22px rgba(68, 94, 111, 0.1)',
+    },
+    chips: {
+        position: "absolute",
+        bottom: "10px",
+        marginLeft: "3%",
+        //backgroundColor:"red",
+        width: "80%",
     },
 }
 
@@ -118,28 +85,18 @@ function VValidator(value, str1, str2, str3) {
     return ("Error in VValidator")
 }
 
-const globalData = new GlobalDataStore();
+const globalData = new GlobalData();
 
 const KPIs = () => {
 
-    // useEffect(() => {
-    //     api.get('/countries/')
-    //         .then((response) => {
-    //             setCountries(response.data.length)
-    //         })
-    //         .catch(error => {
-    //             console.error(error)
-    //         })
-    // })
-
     return (
-        <div>
+        <>
             <Grid sx={classes.headContainer}
                   container
                   direction="row"
             >
-                <Grid item sx={classes.headhead}>
-                    <h1 style={classes.H}>Томский политех сегодня - это:</h1>
+                <Grid item sx={classes.head}>
+                    Томский политех сегодня - это:
                 </Grid>
             </Grid>
 
@@ -147,19 +104,17 @@ const KPIs = () => {
                 <Grid
                     container
                     sx={classes.container}
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    spacing={0}
+                    columnSpacing={2}
+                    rowSpacing={10}
                 >
                     <Grid item md={6} lg={3}>
                         <KPI
                             background={icon}
-                            value={globalData.countriesList.length}
-                            text={"стран" + VValidator(globalData.countriesList.length, "", "а", "ы") + ", с которыми\nзаключены договоры"}
+                            value={rootStore.globalDataStore.countriesList.length}
+                            text={"стран" + VValidator(rootStore.globalDataStore.countriesList.length, "", "а", "ы") + ", с которыми\nзаключены договоры"}
                         />
                     </Grid>
-                    <Grid item md={6} lg={3} style={{padding: 0}}>
+                    <Grid item md={6} lg={3}>
                         <KPI
                             background={icon1}
                             value={136}
@@ -170,7 +125,7 @@ const KPIs = () => {
                         <KPI
                             background={icon2}
                             value={22}
-                            text={"международные\nколлаборации"}
+                            text={"международные коллаборации"}
                         />
 
                     </Grid>
@@ -178,29 +133,55 @@ const KPIs = () => {
                         <KPI
                             background={icon3}
                             value={453}
-                            text={"совместные\nисследования"}
+                            text={"совместные исследования"}
                         />
                     </Grid>
                 </Grid>
 
-                <img style={classes.background} src={background1} alt='bg1'/>
-                <img style={classes.background} src={background2} alt='bg2'/>
+                <img style={classes.background} src={background1} alt={"background1"}/>
+                <img style={classes.background} src={background2} alt={"background2"}/>
             </div>
-        </div>
+            <div style={classes.searchAgreement}>
+                <div style={classes.searchAgreementText}>
+                    Поиск договоров
+                </div>
+                <Grid
+                    sx={classes.chips}
+                    container
+                    spacing={2}
+                >
+                    <Grid item>
+                        <Chip text={rootStore.filtersStore.country?.name ?? ""}
+                              f={() => {
+                                  rootStore.filtersStore.updateCountry(null)
+                              }}/>
+                    </Grid>
+                    <Grid item>
+                        <Chip
+                            text={rootStore.filtersStore.engineeringSchool?.name ?? ""}
+                            f={() => {
+                                rootStore.filtersStore.updateEngineeringSchool(null)
+                            }}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <Chip text={rootStore.filtersStore.representative?.name ?? ""}
+                              f={() => {
+                                  rootStore.filtersStore.updateEngineeringSchool(null)
+                              }}/>
+                    </Grid>
+                    <Grid item>
+                        <Chip text={rootStore.filtersStore.agrType?.name ?? ""}
+                              f={() => {
+                                  rootStore.filtersStore.updateAgrType(null)
+                              }}/>
+                    </Grid>
+
+                </Grid>
+            </div>
+        </>
     )
 }
 
-
-const KPI = ({background, value, text}) => {
-    return (
-        <Container sx={classes.KPI} >
-            <Paper sx={classes.card} variant="contained">
-                <div style={classes.value} >{value} </div>
-                <div style={classes.text}> {text} </div>
-            </Paper>
-            <img style={classes.img} src={background} alt='kpiBg'/>
-        </Container>
-    )
-}
 
 export default observer(KPIs)
