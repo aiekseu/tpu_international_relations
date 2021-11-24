@@ -37,6 +37,7 @@ const NewCustomMap = () => {
                 state={{
                     center: [56.465409, 84.950182], //Координаты ТПУ
                     zoom: 13,
+                    behaviors: ["disable('scrollZoom')"]
                 }}
                 options={{
                     maxZoom: 14,
