@@ -12,6 +12,8 @@ class FiltersStore {
         expiringSoon: false
     };
 
+    isOpen = true;
+
     rootStore;
     constructor(rootStore) {
         makeAutoObservable(this);
@@ -39,7 +41,6 @@ class FiltersStore {
     }
 
     findCompanies()  {
-        console.log(this.rootStore)
          this.rootStore.globalDataStore.updateCompanies({
             country: this.country,
             agrType: this.agrType,

@@ -1,8 +1,6 @@
-import {Map, ObjectManager, YMaps} from "react-yandex-maps";
-import {useRef} from "react";
+import {Map, ObjectManager, YMaps, ZoomControl} from "react-yandex-maps";
+import {useEffect, useRef} from "react";
 import {observer} from "mobx-react-lite";
-import {toJS} from "mobx";
-// import RootStore from "../stores/rootStore";
 import rootStore from '../stores/rootStore'
 
 
@@ -24,63 +22,25 @@ const classes = {
     }
 }
 
-// const rootStore = new RootStore()
-
-
 const NewCustomMap = () => {
 
     const map = useRef(null);
     const objectManager = useRef(null)
 
-    // console.log(rootStore.mapStore.features)
-
-    // const tempF = [
-    //     {
-    //         id: 243, //Для кооректной отрисовки ВСЕХ объектов - на будущее, чтобы не забыть
-    //         type: "Feature",
-    //         geometry: {
-    //             type: "Point",
-    //             coordinates: [36.465409, 84.950182]
-    //         },
-    //         properties: {
-    //             clusterCaption: 'asdasd',
-    //             iconCaption: 'asdasd',
-    //         },
-    //         options: {
-    //             preset: "islands#blueGovernmentIcon",
-    //             openHintOnHover: false,
-    //         },
-    //     },
-    //     {
-    //         id: 3466, //Для кооректной отрисовки ВСЕХ объектов - на будущее, чтобы не забыть
-    //         type: "Feature",
-    //         geometry: {
-    //             type: "Point",
-    //             coordinates: [56.465409, 84.950182]
-    //         },
-    //         properties: {
-    //             clusterCaption: 'company.name',
-    //             iconCaption: 'company.name',
-    //         },
-    //         options: {
-    //             preset: "islands#blueGovernmentIcon",
-    //             openHintOnHover: false,
-    //         },
-    //     }
-    // ]
-    // console.log(toJS(rootStore.mapStore.features)[0])
-    // console.log(tempF[0])
+    useEffect(() => {
+        rootStore.mapStore.setRefs(map, objectManager)
+    }, [map, objectManager])
 
     return (
         <YMaps className={classes.map}>
             <Map
                 state={{
                     center: [56.465409, 84.950182], //Координаты ТПУ
-                    zoom: 10,
-                    controls: ['zoomControl', 'fullscreenControl'],
+                    zoom: 13,
                 }}
                 options={{
                     maxZoom: 14,
+                    minZoom: 2,
                     autoFitToViewport: 'always'
                 }}
                 instanceRef={map}
@@ -88,6 +48,15 @@ const NewCustomMap = () => {
                 height='100%'
                 modules={['control.ZoomControl', 'control.FullscreenControl']}
             >
+                <ZoomControl
+                    options={{
+                        position: {
+                            left: 'auto',
+                            right: 20,
+                            top: 200,
+                        }
+                    }}
+                />
                 <ObjectManager
                     objects={{
                         openBalloonOnClick: true,

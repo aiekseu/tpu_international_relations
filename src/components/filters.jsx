@@ -101,8 +101,7 @@ const classes = {
     },
 }
 
-// const rootStore = new RootStore()
-
+// Список компаний
 const CompaniesList = observer(() => {
     return (
         <List>
@@ -134,7 +133,7 @@ const Filters = observer(() => {
                     Поиск договоров
                 </Typography>
 
-                {/* Инпуты */}
+                {/* Ввод страны */}
                 <Autocomplete
                     id="countryInput"
                     sx={classes.autocomplete}
@@ -153,6 +152,8 @@ const Filters = observer(() => {
                         rootStore.filtersStore.updateCountry(value)
                     }}
                 />
+
+                {/*Ввод инженерной школы*/}
                 <Autocomplete
                     id="schoolInput"
                     sx={classes.autocomplete}
@@ -171,6 +172,8 @@ const Filters = observer(() => {
                         rootStore.filtersStore.updateEngineeringSchool(value)
                     }}
                 />
+
+                {/* Ввод ответственного в ТПУ*/}
                 <Autocomplete
                     id="representativeInput"
                     sx={classes.autocomplete}
@@ -189,6 +192,8 @@ const Filters = observer(() => {
                         rootStore.filtersStore.updateRepresentative(value)
                     }}
                 />
+
+                {/* Ввод типов договоров*/}
                 <Autocomplete
                     id="agrTypeInput"
                     sx={classes.autocomplete}
@@ -262,7 +267,7 @@ const Filters = observer(() => {
                     Список компаний
                 </Typography>
 
-
+                {/* Список компаний */}
                 <div style={classes.companiesListDiv}>
                     {
                         (toJS(rootStore.globalDataStore.companiesList.length === 0))

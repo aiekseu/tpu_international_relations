@@ -1,5 +1,6 @@
 import {makeAutoObservable, runInAction, toJS} from "mobx"
 import {baseURL} from "../utils/API";
+import rootStore from "./rootStore";
 
 class GlobalDataStore {
 
@@ -58,6 +59,10 @@ class GlobalDataStore {
                     this.companiesList = json;
                 })
             })
+             .then(() => {
+                 // this.rootStore.mapStore.setCenterAndZoom(this.companiesList[0])
+                 this.rootStore.mapStore.setCenterAndZoom()
+             })
         this.changeFetchingState()
     }
 

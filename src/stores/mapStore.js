@@ -1,7 +1,11 @@
-import {makeAutoObservable, runInAction, toJS} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 
 class MapStore {
+
+    map;
+    objectManager;
     rootStore;
+
     constructor(rootStore) {
         makeAutoObservable(this);
         this.rootStore = rootStore;
@@ -12,7 +16,7 @@ class MapStore {
             .filter((company) => company !== null && company.location !== null)
             .map((company) => {
                 return {
-                    id: company.id, //Для кооректной отрисовки ВСЕХ объектов - на будущее, чтобы не забыть
+                    id: Math.random(), //Для кооректной отрисовки ВСЕХ объектов - на будущее, чтобы не забыть
                     type: "Feature",
                     geometry: {
                         type: "Point",
@@ -28,7 +32,19 @@ class MapStore {
                     },
                 };
             })
-}
+    }
+
+    setCenterAndZoom() {
+        this.map?.current.setBounds(this.objectManager?.current.getBounds());
+        // if (this.map?.current.getZoom() > 10) {
+        //     this.map?.current.setZoom(10)
+        // }
+    }
+
+    setRefs(map, objectManager) {
+        this.map = map;
+        this.objectManager = objectManager;
+    }
 
 }
 
