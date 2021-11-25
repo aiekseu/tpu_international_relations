@@ -1,4 +1,4 @@
-import {Container, Grid,} from "@mui/material";
+import {Chip, Grid, Typography,} from "@mui/material";
 import background1 from "../images/Vector.png"
 import background2 from "../images/Vector1.png"
 import icon from "../images/icon (2).svg"
@@ -8,7 +8,7 @@ import icon3 from "../images/icon (4).svg"
 import GlobalData from "../stores/globalDataStore";
 import {observer} from "mobx-react-lite";
 import KPI from "../components/KPI";
-import Chip from "../components/chip";
+import ChipBox from "../components/chipBox";
 import rootStore from "../stores/rootStore";
 
 
@@ -22,7 +22,7 @@ const classes = {
         fontFamily: "'Poppins', sans-serif",
         fontStyle: "normal",
         fontWeight: 'bold',
-        fontSize: '4rem',
+        fontSize: '5rem',
         color: '#55802B',
         textShadow: '0px 4px 22px rgba(68, 94, 111, 0.1)',
     },
@@ -54,9 +54,9 @@ const classes = {
     },
     searchAgreementText: {
         position: "absolute",
+        bottom: "30%",
         marginLeft: "3%",
         fontFamily: "'Poppins', sans-serif",
-        fontStyle: "normal",
         fontWeight: 'bold',
         fontSize: '3.5rem',
         color: "#5B5B5B",
@@ -65,8 +65,7 @@ const classes = {
     chips: {
         position: "absolute",
         bottom: "10px",
-        marginLeft: "3%",
-        //backgroundColor:"red",
+        marginLeft: "2%",
         width: "80%",
     },
 }
@@ -88,6 +87,10 @@ function VValidator(value, str1, str2, str3) {
 const globalData = new GlobalData();
 
 const KPIs = () => {
+    const countriesNum = rootStore.kpiStore.kpi.countries_num;
+    const annualAgreementsNum = rootStore.kpiStore.kpi.annual_agreements_num;
+    const companiesNum = rootStore.kpiStore.kpi.companies_num;
+    const researchesNum = rootStore.kpiStore.kpi.researches_num;
 
     return (
         <>
@@ -110,30 +113,30 @@ const KPIs = () => {
                     <Grid item md={6} lg={3}>
                         <KPI
                             background={icon}
-                            value={rootStore.globalDataStore.countriesList.length}
-                            text={"стран" + VValidator(rootStore.globalDataStore.countriesList.length, "", "а", "ы") + ", с которыми\nзаключены договоры"}
+                            value={countriesNum}
+                            text={"стран" + VValidator(countriesNum, "", "а", "ы") + ", с которыми заключены договоры"}
                         />
                     </Grid>
                     <Grid item md={6} lg={3}>
                         <KPI
                             background={icon1}
-                            value={136}
-                            text={"университет" + VValidator(136, "ов", "", "а") + "-\nпартнеров"}
+                            value={annualAgreementsNum}
+                            text={"университет" + VValidator(annualAgreementsNum, "ов", "", "а") + "-партнеров"}
                         />
                     </Grid>
                     <Grid item md={6} lg={3}>
                         <KPI
                             background={icon2}
-                            value={22}
-                            text={"международные коллаборации"}
+                            value={companiesNum}
+                            text={"международн" + VValidator(researchesNum, "ых", "е", "ых") + " коллаборации"}
                         />
 
                     </Grid>
                     <Grid item md={6} lg={3}>
                         <KPI
                             background={icon3}
-                            value={453}
-                            text={"совместные исследования"}
+                            value={researchesNum}
+                            text={"совместн" + VValidator(researchesNum, "ых", "е", "ых") + " исследования"}
                         />
                     </Grid>
                 </Grid>
@@ -142,41 +145,34 @@ const KPIs = () => {
                 <img style={classes.background} src={background2} alt={"background2"}/>
             </div>
             <div style={classes.searchAgreement}>
-                <div style={classes.searchAgreementText}>
+                <Typography style={classes.searchAgreementText}>
                     Поиск договоров
-                </div>
+                </Typography>
                 <Grid
                     sx={classes.chips}
                     container
                     spacing={2}
                 >
-                    <Grid item>
-                        <Chip text={rootStore.filtersStore.country?.name ?? ""}
-                              f={() => {
-                                  rootStore.filtersStore.updateCountry(null)
-                              }}/>
-                    </Grid>
-                    <Grid item>
-                        <Chip
-                            text={rootStore.filtersStore.engineeringSchool?.name ?? ""}
-                            f={() => {
+                    <ChipBox text={rootStore.filtersStore.country?.name ?? ""}
+                             f={() => {
+                                rootStore.filtersStore.updateCountry(null)
+                            }}
+                    />
+                    <ChipBox text={rootStore.filtersStore.engineeringSchool?.name ?? ""}
+                             f={() => {
                                 rootStore.filtersStore.updateEngineeringSchool(null)
                             }}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <Chip text={rootStore.filtersStore.representative?.name ?? ""}
-                              f={() => {
-                                  rootStore.filtersStore.updateEngineeringSchool(null)
-                              }}/>
-                    </Grid>
-                    <Grid item>
-                        <Chip text={rootStore.filtersStore.agrType?.name ?? ""}
-                              f={() => {
-                                  rootStore.filtersStore.updateAgrType(null)
-                              }}/>
-                    </Grid>
-
+                    />
+                    <ChipBox text={(rootStore.filtersStore.representative?.second_name ?? "") + " " + (rootStore.filtersStore.representative?.first_name ?? "")}
+                             f={() => {
+                                rootStore.filtersStore.updateRepresentative(null)
+                            }}
+                    />
+                    <ChipBox text={rootStore.filtersStore.agrType?.name ?? ""}
+                             f={() => {
+                                rootStore.filtersStore.updateAgrType(null)
+                            }}
+                    />
                 </Grid>
             </div>
         </>

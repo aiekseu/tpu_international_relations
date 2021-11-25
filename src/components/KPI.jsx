@@ -52,9 +52,6 @@ const classes = {
         "&:hover": {
             transform: "scale(1.25)",
         },
-        "&:hover img": {
-            opacity: "1",
-        }
     },
 }
 const KPI = ({background, value, text}) => {
