@@ -8,7 +8,6 @@ import icon3 from "../images/icon (4).svg"
 import GlobalData from "../stores/globalDataStore";
 import {observer} from "mobx-react-lite";
 import KPI from "../components/KPI";
-import ChipBox from "../components/chipBox";
 import rootStore from "../stores/rootStore";
 
 
@@ -46,27 +45,6 @@ const classes = {
         width: "100%",
         height: "400px",
         bottom: "0",
-    },
-    searchAgreement: {
-        display: "flex",
-        position: "relative",
-        height: "200px",
-    },
-    searchAgreementText: {
-        position: "absolute",
-        bottom: "30%",
-        marginLeft: "3%",
-        fontFamily: "'Poppins', sans-serif",
-        fontWeight: 'bold',
-        fontSize: '3.5rem',
-        color: "#5B5B5B",
-        textShadow: '0px 4px 22px rgba(68, 94, 111, 0.1)',
-    },
-    chips: {
-        position: "absolute",
-        bottom: "10px",
-        marginLeft: "2%",
-        width: "80%",
     },
 }
 
@@ -144,40 +122,8 @@ const KPIs = () => {
                 <img style={classes.background} src={background1} alt={"background1"}/>
                 <img style={classes.background} src={background2} alt={"background2"}/>
             </div>
-            <div style={classes.searchAgreement}>
-                <Typography style={classes.searchAgreementText}>
-                    Поиск договоров
-                </Typography>
-                <Grid
-                    sx={classes.chips}
-                    container
-                    spacing={2}
-                >
-                    <ChipBox text={rootStore.filtersStore.country?.name ?? ""}
-                             f={() => {
-                                rootStore.filtersStore.updateCountry(null)
-                            }}
-                    />
-                    <ChipBox text={rootStore.filtersStore.engineeringSchool?.name ?? ""}
-                             f={() => {
-                                rootStore.filtersStore.updateEngineeringSchool(null)
-                            }}
-                    />
-                    <ChipBox text={(rootStore.filtersStore.representative?.second_name ?? "") + " " + (rootStore.filtersStore.representative?.first_name ?? "")}
-                             f={() => {
-                                rootStore.filtersStore.updateRepresentative(null)
-                            }}
-                    />
-                    <ChipBox text={rootStore.filtersStore.agrType?.name ?? ""}
-                             f={() => {
-                                rootStore.filtersStore.updateAgrType(null)
-                            }}
-                    />
-                </Grid>
-            </div>
         </>
     )
 }
-
 
 export default observer(KPIs)

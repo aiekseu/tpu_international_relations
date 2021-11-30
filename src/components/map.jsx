@@ -5,10 +5,6 @@ import rootStore from '../stores/rootStore'
 
 
 const classes = {
-    content: {
-        height: '100%',
-        width: '100%',
-    },
     companiesList: {
         maxHeight: '58vh',
         overflow: 'scroll'
@@ -18,6 +14,8 @@ const classes = {
     },
     map: {
         padding: 0,
+        height: window.innerHeight * 0.85,
+        width: window.innerWidth,
         marginRight: 'auto'
     }
 }

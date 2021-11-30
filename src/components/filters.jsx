@@ -126,6 +126,7 @@ const CompaniesList = observer(() => {
                         sx={classes.listItem}
                         onClick={() => {
                             rootStore.filtersStore.setCurrentCompany(company)
+                            console.log(company)
                         }}
                     >
                         <ListItemText sx={classes.listItemText} disableTypography>

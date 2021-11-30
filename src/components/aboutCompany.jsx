@@ -2,41 +2,22 @@ import React from 'react';
 import {
     IconButton,
     Paper,
-    Stack,
+    Stack, Tooltip,
     Typography
 } from "@mui/material";
 import {LoadingButton, Skeleton} from "@mui/lab";
 
 import {observer} from "mobx-react-lite";
-import {toJS} from "mobx";
 
 import styled from "@emotion/styled";
-import theme from "../utils/theme";
 
 import CloseIcon from '@mui/icons-material/Close';
 
 import rootStore from '../stores/rootStore'
-
-// Кнопка "поиск"
-const SearchButton = styled(LoadingButton)(({theme}) => ({
-    borderRadius: 10,
-    borderColor: theme.palette.success.main,
-    borderWidth: 2,
-    padding: 5,
-    textTransform: 'none',
-    fontFamily: "'Poppins', sans-serif",
-    fontWeight: 600,
-    fontSize: '1rem',
-    color: '#5B5B5B',
-    boxShadow: "0px 0px 2px 0px rgba(50, 86, 52, 0.6)",
-    '&:hover': {
-        borderColor: theme.palette.success.main,
-        borderWidth: 2,
-        boxShadow: "0px 0px 5px 0px rgba(50, 106, 52, 0.6)",
-    },
-    marginTop: '12px',
-    marginBottom: '16px',
-}));
+import {Chart} from "react-google-charts";
+import {Pie, ResponsiveContainer} from "recharts";
+import {PieChart} from "@mui/icons-material";
+import MyPieChart from "./pieChart";
 
 const windowHeight = window.innerHeight;
 
@@ -69,15 +50,22 @@ const classes = {
     }
 }
 
+const data01 = [
+    { name: 'Group A', value: 400 },
+    { name: 'Group B', value: 300 },
+    { name: 'Group C', value: 300 },
+    { name: 'Group D', value: 200 },
+    { name: 'Group E', value: 278 },
+    { name: 'Group F', value: 189 },
+];
+
+
 const AboutCompany = observer(() => {
 
     return (
         <Paper
             elevation={3}
             sx={classes.root}
-            // style={{
-            //     visibility: rootStore.aboutCompanyStore.isOpen ? 'visible' : 'hidden',
-            // }}
         >
             <Stack direction='column' style={{width: '100%'}}>
                 <Typography sx={classes.title}>
@@ -93,7 +81,7 @@ const AboutCompany = observer(() => {
                     <CloseIcon style={{fontSize: '1.4rem'}}/>
                 </IconButton>
 
-                {/* Картинка */}
+                <MyPieChart/>
 
                 <Typography sx={classes.title}>
                     История отношений
