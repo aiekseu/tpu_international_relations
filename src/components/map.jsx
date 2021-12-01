@@ -1,5 +1,5 @@
 import {Map, ObjectManager, YMaps, ZoomControl} from "react-yandex-maps";
-import {useEffect, useRef} from "react";
+import {useRef} from "react";
 import {observer} from "mobx-react-lite";
 import rootStore from '../stores/rootStore'
 
@@ -25,10 +25,6 @@ const NewCustomMap = () => {
     const map = useRef(null);
     const objectManager = useRef(null)
 
-    useEffect(() => {
-        rootStore.mapStore.setRefs(map, objectManager)
-    }, [map, objectManager])
-
     return (
         <YMaps className={classes.map}>
             <Map
@@ -44,7 +40,7 @@ const NewCustomMap = () => {
                 }}
                 instanceRef={map}
                 width='100%'
-                height='100%'
+                height={window.innerHeight * 0.85}
                 modules={['control.ZoomControl', 'control.FullscreenControl']}
             >
                 <ZoomControl
@@ -74,6 +70,10 @@ const NewCustomMap = () => {
                         "objectManager.addon.objectsBalloon",
                         "objectManager.addon.clustersBalloon",
                     ]}
+                    onLoad={(instance) => {
+                        rootStore.mapStore.setRefs(map, objectManager)
+                        rootStore.mapStore.setClickEvent()
+                    } }
                 />
             </Map>
         </YMaps>

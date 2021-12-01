@@ -1,4 +1,4 @@
-import { Chip, Grow, Grid} from "@mui/material";
+import {Chip, Grid, Grow} from "@mui/material";
 
 const ChipBox = ({text, f}) =>{
     let t = false

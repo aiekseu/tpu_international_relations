@@ -4,7 +4,6 @@ import theme from "./utils/theme";
 import Header from "./components/header";
 import Agreements from "./panels/agreementsSec";
 import KPIs from "./panels/kpiSec";
-import RootStore from "./stores/rootStore";
 
 // const classes = {
 //     root: {

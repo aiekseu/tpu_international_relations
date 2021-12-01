@@ -1,35 +1,58 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import {baseURL} from "../utils/API";
+import {PIE_CHART_COLORS} from "../utils/pieChartColors";
 
 
 class AboutCompanyStore {
 
     company = {};
     companyAgreements = [];
-    companyPieChartSections = {};
 
-    isOpen = true;
+    pieChartData = {};
+
+    isOpen = true; //TODO: поменять
+    isFetching = false;
 
     rootStore;
 
     constructor(rootStore) {
         makeAutoObservable(this)
         this.rootStore = rootStore
+        this.pieChartActiveIndex = 0;
     }
 
     fetchAgreements(company) {
+        this.changeIsFetchingState()
         fetch(`${baseURL}/agreements?id_company=${company.id}`)
             .then(response => response.json())
             .then(json => {
                 runInAction(() => {
                     this.companyAgreements = json;
+
+                    // Формирование массива с данными для пай чарта
                     let tempPieChartSections = {};
-                    json.map((agreement) =>
-                        tempPieChartSections[`${agreement['id_agr_type']}`]++
-                    )
-                    this.companyPieChartSections = tempPieChartSections;
+                    let tempAgrTypeNames = {};
+                    json.map((agreement) => {
+                        tempPieChartSections[agreement['agreement_type']['id']]
+                            ? tempPieChartSections[agreement['agreement_type']['id']]++
+                            : tempPieChartSections[agreement['agreement_type']['id']] = 1
+
+                        tempAgrTypeNames[agreement['agreement_type']['id']] = agreement['agreement_type']['name']
+                    })
+
+                    let pieChartData = [];
+                    for (let agrtypeID in tempPieChartSections) {
+                        pieChartData.push({
+                            name: tempAgrTypeNames[agrtypeID],
+                            value: tempPieChartSections[agrtypeID],
+                            fill: PIE_CHART_COLORS[agrtypeID]
+                        })
+                    }
+                    this.pieChartData = pieChartData;
+                    this.changeIsFetchingState()
                 })
             })
+
     }
 
     setCompany(company) {
@@ -43,6 +66,12 @@ class AboutCompanyStore {
     openOrCloseAboutCompanyPanel() {
         runInAction(() => {
             this.isOpen = !this.isOpen
+        })
+    }
+
+    changeIsFetchingState() {
+        runInAction(() => {
+            this.isFetching = !this.isFetching
         })
     }
 

@@ -1,11 +1,12 @@
-import React, {useEffect, useRef} from 'react';
+import React from 'react';
 import {
     Autocomplete,
     Box,
     Checkbox,
     Divider,
     FormControlLabel,
-    FormGroup, IconButton,
+    FormGroup,
+    IconButton,
     LinearProgress,
     List,
     ListItem,
@@ -56,7 +57,7 @@ const windowHeight = window.innerHeight;
 const classes = {
     root: {
         width: 340,
-        height: windowHeight * 0.8,
+        height: windowHeight * 0.76,
         paddingTop: 2,
         paddingBottom: 3,
         paddingLeft: 4,
@@ -126,7 +127,6 @@ const CompaniesList = observer(() => {
                         sx={classes.listItem}
                         onClick={() => {
                             rootStore.filtersStore.setCurrentCompany(company)
-                            console.log(company)
                         }}
                     >
                         <ListItemText sx={classes.listItemText} disableTypography>
@@ -135,7 +135,19 @@ const CompaniesList = observer(() => {
                     </ListItem>
                     <Divider/>
                 </div>
-            )
+            )}
+            {
+                (rootStore.globalDataStore.companiesList.length === 0)
+                    ? <ListItem
+                        disablePadding
+                        sx={classes.listItem}
+
+                    >
+                        <ListItemText sx={classes.listItemText} disableTypography>
+                            Ничего не найдено
+                        </ListItemText>
+                    </ListItem>
+                    : <div/>
             }
         </List>
     )
@@ -147,7 +159,7 @@ const Filters = observer(() => {
 
     return (
         <Paper elevation={3} sx={classes.root}
-               style={{height: (rootStore.filtersStore.isOpen) ? windowHeight * 0.8 : 60}}>
+               style={{height: (rootStore.filtersStore.isOpen) ? windowHeight * 0.75 : 60}}>
             <Stack direction='column'>
 
                 <Typography sx={classes.title}>
@@ -320,19 +332,19 @@ const Filters = observer(() => {
                     visibility: (rootStore.filtersStore.isOpen) ? 'visible' : 'hidden' // необходимо прописать здесь, чтобы было видно стейт
                 }}>
                     {
-                        (toJS(rootStore.globalDataStore.companiesList.length === 0) || rootStore.globalDataStore.isFetching)
+                        (rootStore.globalDataStore.isFetching)
                             ? <div>
-                                <Skeleton variant='rectangular' height={40} sx={classes.skeleton} />
-                                <Divider />
-                                <Skeleton variant='rectangular' height={60} sx={classes.skeleton} />
-                                <Divider />
-                                <Skeleton variant='rectangular' height={50} sx={classes.skeleton} />
-                                <Divider />
-                                <Skeleton variant='rectangular' height={30} sx={classes.skeleton} />
-                                <Divider />
-                                <Skeleton variant='rectangular' height={40} sx={classes.skeleton} />
-                                <Divider />
-                                <Skeleton variant='rectangular' height={40} sx={classes.skeleton} />
+                                <Skeleton variant='rectangular' height={40} sx={classes.skeleton}/>
+                                <Divider/>
+                                <Skeleton variant='rectangular' height={60} sx={classes.skeleton}/>
+                                <Divider/>
+                                <Skeleton variant='rectangular' height={50} sx={classes.skeleton}/>
+                                <Divider/>
+                                <Skeleton variant='rectangular' height={30} sx={classes.skeleton}/>
+                                <Divider/>
+                                <Skeleton variant='rectangular' height={40} sx={classes.skeleton}/>
+                                <Divider/>
+                                <Skeleton variant='rectangular' height={40} sx={classes.skeleton}/>
                             </div>
                             : <CompaniesList/>
                     }

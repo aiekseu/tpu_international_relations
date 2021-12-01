@@ -1,4 +1,5 @@
-import {makeAutoObservable, runInAction} from "mobx";
+import {makeAutoObservable} from "mobx";
+import rootStore from "./rootStore";
 
 class MapStore {
 
@@ -35,17 +36,32 @@ class MapStore {
     }
 
     setCenterAndZoom() {
-        this.map?.current.setBounds(this.objectManager?.current.getBounds());
-        // if (this.map?.current.getZoom() > 10) {
-        //     this.map?.current.setZoom(10)
-        // }
+        if (this.rootStore.globalDataStore.companiesList.length === 0) {
+            this.map?.current.setCenter([56.465409, 84.950182])
+            this.map?.current.setZoom(13)
+        } else {
+            this.map?.current.setBounds(this.objectManager?.current.getBounds());
+        }
     }
 
     setRefs(map, objectManager) {
         this.map = map;
         this.objectManager = objectManager;
+
+        // Происходит чудо и ивент добавляется 2 раза - второй удаляем
+        //objectManager.current.objects.events.types.click.pop()
     }
 
+    setClickEvent() {
+        this.objectManager.current?.objects.events.add('click', (e) => {
+            // Используем айдишник для того, чтобы далее получить инфу по метке
+            const objectId = e.get('objectId');
+            const companyName = this.objectManager.current.objects.getById(objectId).properties.clusterCaption
+
+            let company = this.rootStore.globalDataStore.companiesList.find((element) => element.name === companyName);
+            this.rootStore.filtersStore.setCurrentCompany(company)
+        })
+    }
 }
 
 export default MapStore;

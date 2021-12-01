@@ -1,22 +1,12 @@
 import React from 'react';
-import {
-    IconButton,
-    Paper,
-    Stack, Tooltip,
-    Typography
-} from "@mui/material";
-import {LoadingButton, Skeleton} from "@mui/lab";
+import {IconButton, Paper, Skeleton, Stack, Typography} from "@mui/material";
 
 import {observer} from "mobx-react-lite";
 
-import styled from "@emotion/styled";
 
 import CloseIcon from '@mui/icons-material/Close';
 
 import rootStore from '../stores/rootStore'
-import {Chart} from "react-google-charts";
-import {Pie, ResponsiveContainer} from "recharts";
-import {PieChart} from "@mui/icons-material";
 import MyPieChart from "./pieChart";
 
 const windowHeight = window.innerHeight;
@@ -36,7 +26,7 @@ const classes = {
         marginRight: 'auto',
         fontWeight: 600,
         fontSize: '1.125rem',
-        marginBottom: 1.5,
+        marginBottom: 0.5,
     },
     closeButton: {
         position: 'absolute',
@@ -49,16 +39,6 @@ const classes = {
         borderRadius: 0.5,
     }
 }
-
-const data01 = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-    { name: 'Group E', value: 278 },
-    { name: 'Group F', value: 189 },
-];
-
 
 const AboutCompany = observer(() => {
 

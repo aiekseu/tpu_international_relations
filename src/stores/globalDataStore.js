@@ -49,26 +49,30 @@ class GlobalDataStore {
             })
     }
 
-     updateCompanies({country, agrType, engineeringSchool, representative, agrStates}) {
+    updateCompanies({country, agrType, engineeringSchool, representative, agrStates}) {
         this.changeFetchingState()
 
-         let countryID = toJS(country).id ?? 'null'
-         let agrTypeID = toJS(agrType).id ?? 'null'
-         let engineeringSchoolID = toJS(engineeringSchool).id ?? 'null'
-         let representativeID = toJS(representative).id ?? 'null'
+        let countryID = toJS(country).id ?? null
+        let agrTypeID = toJS(agrType).id ?? null
+        let engineeringSchoolID = toJS(engineeringSchool).id ?? null
+        let representativeID = toJS(representative).id ?? null
 
-         fetch(`${baseURL}/companies?id_country=${countryID}`)
+        let query = `${countryID ? 'id_country=' + countryID : ''}` +
+            `${agrTypeID ? '&id_agreement_type=' + agrTypeID : ''}` +
+            `${engineeringSchoolID ? '&id_school=' + engineeringSchoolID : ''}` +
+            `${representativeID ? '&id_representative=' + representativeID : ''}`
+
+        fetch(`${baseURL}/companies/?${query}`)
             .then(response => response.json())
             .then(json => {
                 runInAction(() => {
                     this.companiesList = json;
                 })
             })
-             .then(() => {
-                 // this.rootStore.mapStore.setCenterAndZoom(this.companiesList[0])
-                 this.rootStore.mapStore.setCenterAndZoom()
-             })
-        this.changeFetchingState()
+            .then(() => {
+                this.rootStore.mapStore.setCenterAndZoom()
+                this.changeFetchingState()
+            })
     }
 
     changeFetchingState() {

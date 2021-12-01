@@ -1,4 +1,4 @@
-import {Chip, Grid, Typography,} from "@mui/material";
+import {Grid,} from "@mui/material";
 import background1 from "../images/Vector.png"
 import background2 from "../images/Vector1.png"
 import icon from "../images/icon (2).svg"
