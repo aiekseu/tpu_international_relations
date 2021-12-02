@@ -69,6 +69,13 @@ class FiltersStore {
     setCurrentCompany(company) {
         this.rootStore.aboutCompanyStore.setCompany(company)
     }
+
+    updateAgrStates(index) {
+        // active
+        // expired
+        // expiringSoon
+        this.agrState[index] = !this.agrState[index];
+    }
 }
 
 export default FiltersStore;

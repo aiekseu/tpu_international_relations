@@ -210,7 +210,7 @@ const Filters = observer(() => {
                     autoHighlight
                     key={rootStore.filtersStore.engineeringSchoolKey}
                     isOptionEqualToValue={(option, value) => option.id === value.id}
-                    options={toJS(rootStore.globalDataStore.countriesList)}
+                    options={toJS(rootStore.globalDataStore.engineerSchoolsList)}
                     getOptionLabel={(option) => option.name}
                     noOptionsText={<LinearProgress/>}
                     renderOption={(props, option) => (
@@ -269,6 +269,10 @@ const Filters = observer(() => {
                 />
 
                 {/* Чекбоксы */}
+                {/*    active: false,*/}
+                {/*    expired: false,*/}
+                {/*    expiringSoon: false*/}
+
                 <FormGroup row style={hideableStyle}>
                     <FormControlLabel
                         sx={classes.checkboxesForm}
@@ -277,9 +281,13 @@ const Filters = observer(() => {
                             <Checkbox
                                 icon={<RadioButtonUncheckedIcon style={{fontSize: '1.3rem'}}/>}
                                 checkedIcon={<CheckCircleIcon style={{fontSize: '1.3rem'}}/>}
+                                checked={rootStore.filtersStore.agrState['active']}
                                 sx={classes.checkbox}
                             />
                         }
+                        onChange={() => {
+                            rootStore.filtersStore.updateAgrStates('active')
+                        }}
                     />
                     <FormControlLabel
                         label={<Typography sx={classes.checkboxLabel}>Истек</Typography>}
@@ -287,9 +295,13 @@ const Filters = observer(() => {
                             <Checkbox
                                 icon={<RadioButtonUncheckedIcon style={{fontSize: '1.3rem'}}/>}
                                 checkedIcon={<CheckCircleIcon style={{fontSize: '1.3rem'}}/>}
+                                checked={rootStore.filtersStore.agrState['expired']}
                                 sx={classes.checkbox}
                             />
                         }
+                        onChange={() => {
+                            rootStore.filtersStore.updateAgrStates('expired')
+                        }}
                     />
                     <FormControlLabel
                         label={
@@ -301,9 +313,13 @@ const Filters = observer(() => {
                             <Checkbox
                                 icon={<RadioButtonUncheckedIcon style={{fontSize: '1.3rem'}}/>}
                                 checkedIcon={<CheckCircleIcon style={{fontSize: '1.3rem'}}/>}
+                                checked={rootStore.filtersStore.agrState['expiringSoon']}
                                 sx={classes.checkbox}
                             />
                         }
+                        onChange={() => {
+                            rootStore.filtersStore.updateAgrStates('expiringSoon')
+                        }}
                     />
                 </FormGroup>
 

@@ -26,11 +26,11 @@ class GlobalDataStore {
                     this.countriesList = json;
                 })
             })
-        fetch(`${baseURL}/agreement_types`)
+        fetch(`${baseURL}/schools`)
             .then(response => response.json())
             .then(json => {
                 runInAction(() => {
-                    this.agreementTypesList = json;
+                    this.engineerSchoolsList = json;
                 })
             })
         fetch(`${baseURL}/representatives`)
@@ -38,6 +38,13 @@ class GlobalDataStore {
             .then(json => {
                 runInAction(() => {
                     this.representativesList = json;
+                })
+            })
+        fetch(`${baseURL}/agreement_types`)
+            .then(response => response.json())
+            .then(json => {
+                runInAction(() => {
+                    this.agreementTypesList = json;
                 })
             })
         fetch(`${baseURL}/companies`)
@@ -56,6 +63,19 @@ class GlobalDataStore {
         let agrTypeID = toJS(agrType).id ?? null
         let engineeringSchoolID = toJS(engineeringSchool).id ?? null
         let representativeID = toJS(representative).id ?? null
+
+
+        //TODO:
+        let agrStateQuery = '&state=';
+        if (agrStates['active']) {
+            agrStateQuery += 'active'
+        }
+        if (agrStates['expired']) {
+            agrStateQuery += 'expired'
+        }
+        if (agrStates['expiringSoon']) {
+            agrStateQuery += 'expiringSoon'
+        }
 
         let query = `${countryID ? 'id_country=' + countryID : ''}` +
             `${agrTypeID ? '&id_agreement_type=' + agrTypeID : ''}` +

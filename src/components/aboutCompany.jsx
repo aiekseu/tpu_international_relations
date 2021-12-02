@@ -26,7 +26,15 @@ const classes = {
         marginRight: 'auto',
         fontWeight: 600,
         fontSize: '1.125rem',
-        marginBottom: 0.5,
+        marginBottom: 0,
+    },
+    companyName: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: 1,
+        fontWeight: 400,
+        fontSize: '0.9rem',
+        textAlign: 'center'
     },
     closeButton: {
         position: 'absolute',
@@ -37,7 +45,15 @@ const classes = {
     skeleton: {
         margin: 0.5,
         borderRadius: 0.5,
-    }
+    },
+    historyTitle: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginBottom: 0,
+        marginTop: 1,
+        fontWeight: 600,
+        fontSize: '1.125rem',
+    },
 }
 
 const AboutCompany = observer(() => {
@@ -52,6 +68,17 @@ const AboutCompany = observer(() => {
                     Информация о компании
                 </Typography>
 
+
+                {
+                    (rootStore.aboutCompanyStore.company)
+                        ?
+                        <Typography sx={classes.companyName}>
+                            {rootStore.aboutCompanyStore.company.name}
+                        </Typography>
+                        : <Skeleton variant='rectangular' height={40} sx={classes.skeleton}/>
+                }
+
+
                 <IconButton
                     sx={classes.closeButton}
                     onClick={() => {
@@ -63,14 +90,14 @@ const AboutCompany = observer(() => {
 
                 <MyPieChart/>
 
-                <Typography sx={classes.title}>
+                <Typography sx={classes.historyTitle}>
                     История отношений
                 </Typography>
 
                 {
                     (rootStore.aboutCompanyStore.company)
                         ? <div>
-                            {rootStore.aboutCompanyStore.company.name}
+                            история
                         </div>
                         : <Skeleton variant='rectangular' height={150} sx={classes.skeleton}/>
 

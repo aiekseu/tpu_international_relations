@@ -1,10 +1,11 @@
 import Filters from "../components/filters";
 import NewCustomMap from "../components/map";
-import AboutCompany from "../components/aboutCompany";
+import AboutCompanyCard from "../components/aboutCompany";
 import {observer} from "mobx-react-lite";
 import rootStore from "../stores/rootStore";
 import {Grid, Typography} from "@mui/material";
 import ChipBox from "../components/chipBox";
+import CompanyTable from "../components/table";
 
 const classes = {
     root: {
@@ -77,15 +78,29 @@ const Agreements = () => {
             <div style={classes.filters}>
                 <Filters/>
             </div>
+
+            {/*  Карточка компании  */}
             <div
                 style={{ // Костыль, но нужный :(
-                    visibility: rootStore.aboutCompanyStore.isOpen ? 'visible' : 'hidden',
+                    visibility: rootStore.aboutCompanyStore.isOpen && !rootStore.aboutCompanyStore.isCardChoosen ? 'visible' : 'hidden',
                     position: 'absolute',
                     top: 142,
                     right: 80
                 }}
             >
-                <AboutCompany/>
+                <AboutCompanyCard/>
+            </div>
+
+            {/*  Таблица компании  */}
+            <div
+                style={{ // Костыль, но нужный :(
+                    visibility: rootStore.aboutCompanyStore.isOpen && rootStore.aboutCompanyStore.isCardChoosen ? 'visible' : 'hidden',
+                    position: 'absolute',
+                    top: 142,
+                    right: 80
+                }}
+            >
+                <CompanyTable/>
             </div>
         </div>
     )

@@ -10,7 +10,8 @@ class AboutCompanyStore {
 
     pieChartData = {};
 
-    isOpen = true; //TODO: поменять
+    isOpen = false; //TODO: поменять на false
+    isCardChoosen = false;
     isFetching = false;
 
     rootStore;
@@ -18,7 +19,6 @@ class AboutCompanyStore {
     constructor(rootStore) {
         makeAutoObservable(this)
         this.rootStore = rootStore
-        this.pieChartActiveIndex = 0;
     }
 
     fetchAgreements(company) {
