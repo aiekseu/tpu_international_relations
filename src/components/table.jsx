@@ -88,21 +88,7 @@ const CompanyTable = observer(() => {
                     <CloseIcon style={{fontSize: '1.4rem'}}/>
                 </IconButton>
 
-                <MyPieChart/>
-
-                <Typography sx={classes.historyTitle}>
-                    История отношений
-                </Typography>
-
-                {
-                    (rootStore.aboutCompanyStore.company)
-                        ? <div>
-                            история
-                        </div>
-                        : <Skeleton variant='rectangular' height={150} sx={classes.skeleton}/>
-
-                }
-
+                
             </Stack>
         </Paper>
     )
