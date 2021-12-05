@@ -1,63 +1,33 @@
 import React from 'react';
-import {CssBaseline, ThemeProvider,} from "@mui/material";
+import {CssBaseline, ThemeProvider, Typography, useMediaQuery,} from "@mui/material";
 import theme from "./utils/theme";
 import Header from "./components/header";
 import Agreements from "./panels/agreementsSec";
 import KPIs from "./panels/kpiSec";
 
-// const classes = {
-//     root: {
-//         flexGrow: 1,
-//     },
-//
-// }
-
 const App = () => {
 
-    return (
-        <>
-            <ThemeProvider theme={theme}>
-                <CssBaseline/>
-                <Header />
-                <KPIs />
-                <Agreements/>
-                {/*    <main>*/}
-                {/*        <div className={classes.content}>*/}
-                {/*            <Container maxWidth="lg">*/}
-                {/*                <Grid container direction='column' alignItems='center'>*/}
-                {/*                    <Typography variant='h4' className={classes.sectionTitle}>*/}
-                {/*                        Статистика*/}
-                {/*                    </Typography>*/}
-                {/*                    <ButtonGroup variant="text" size='large' color="black" fullWidth>*/}
-                {/*                        <Button*/}
-                {/*                            onClick={() => setActiveCard('country')}*/}
-                {/*                            className={activeCard === 'country' ? classes.activeSectionName : classes.inactiveSectionName}*/}
-                {/*                        >*/}
-                {/*                            По странам*/}
-                {/*                        </Button>*/}
-                {/*                        <Button*/}
-                {/*                            onClick={() => setActiveCard('representative')}*/}
-                {/*                            className={activeCard === 'representative' ? classes.activeSectionName : classes.inactiveSectionName}*/}
-                {/*                        >*/}
-                {/*                            По ключевым людям*/}
-                {/*                        </Button>*/}
-                {/*                        <Button*/}
-                {/*                            onClick={() => setActiveCard('agreement')}*/}
-                {/*                            className={activeCard === 'agreement' ? classes.activeSectionName : classes.inactiveSectionName}*/}
-                {/*                        >*/}
-                {/*                            По типам договоров*/}
-                {/*                        </Button>*/}
-                {/*                    </ButtonGroup>*/}
-                {/*                </Grid>*/}
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-                {/*                <div className={classes.statisticCard}>*/}
-                {/*                    {getStatisticCard(activeCard)}*/}
-                {/*                </div>*/}
-                {/*            </Container>*/}
-                {/*        </div>*/}
-                {/*    </main>*/}
-            </ThemeProvider>
-        </>
+    return (
+        isMobile // если пользователь зашел с устроства с маленьким экраном - извиняемся и ничего не показываем
+            ? <div style={{textAlign: 'center', marginTop: 80}}>
+                <Typography variant='h5'>
+                    Международные связи ТПУ<br/><br/>
+                </Typography>
+                <Typography>
+                    Мобильная версия находится в разработке
+                </Typography>
+            </div>
+            : <>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline/>
+                    <Header/>
+                    {/* Секции лендинга из ../panels */}
+                    <KPIs/>
+                    <Agreements/>
+                </ThemeProvider>
+            </>
     )
 
 };

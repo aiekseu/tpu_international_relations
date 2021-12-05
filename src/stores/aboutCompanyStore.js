@@ -7,6 +7,7 @@ class AboutCompanyStore {
 
     company = {};
     companyAgreements = [];
+    timeLineData = [];
 
     pieChartData = {};
 
@@ -49,10 +50,22 @@ class AboutCompanyStore {
                         })
                     }
                     this.pieChartData = pieChartData;
+                    this.fetchTimeLineData(company);
                     this.changeIsFetchingState()
                 })
             })
 
+    }
+
+    fetchTimeLineData(company) {
+        fetch(`${baseURL}/timeline/${company.id}`)
+            .then(response => response.json())
+            .then(json => {
+                runInAction(() => {
+                    this.timeLineData = json;
+                })
+                console.log(json)
+            })
     }
 
     setCompany(company) {

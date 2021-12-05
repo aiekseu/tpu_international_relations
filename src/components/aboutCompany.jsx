@@ -8,6 +8,15 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import rootStore from '../stores/rootStore'
 import MyPieChart from "./pieChart";
+import {
+    Timeline,
+    TimelineConnector,
+    TimelineContent,
+    TimelineDot,
+    TimelineItem,
+    TimelineOppositeContent,
+    TimelineSeparator
+} from "@mui/lab";
 
 const windowHeight = window.innerHeight;
 
@@ -54,7 +63,46 @@ const classes = {
         fontWeight: 600,
         fontSize: '1.125rem',
     },
+    timeline: {
+        padding: 0
+    },
+    timeLineAgrType: {
+        fontWeight: 500,
+        fontSize: '0.875rem',
+        lineHeight: 1.3
+    },
+    timeLineAgrDate: {
+        fontWeight: 300,
+        fontSize: '0.75rem',
+        color: '#707070'
+    }
 }
+
+const CompanyTimeline = observer(() => {
+
+    return (
+        <Timeline position="right" sx={classes.timeline}>
+            {rootStore.aboutCompanyStore.timeLineData.map((agrState, index) => {
+                    return (
+                        <TimelineItem key={agrState.id_agreement}>
+                            <TimelineSeparator>
+                                <TimelineConnector/>
+                                <TimelineDot color={agrState.is_valid ? 'success' : 'error'}/>
+                                <TimelineConnector/>
+                            </TimelineSeparator>
+                            <TimelineOppositeContent style={{display: 'none'}}/>
+                            <TimelineContent sx={{py: '12px', px: 2}}>
+                                <Typography sx={classes.timeLineAgrType}>
+                                    {agrState.agr_type_name}
+                                </Typography>
+                                <Typography sx={classes.timeLineAgrDate}>{agrState.end_date ?? 'Неизвестная дата'}</Typography>
+                            </TimelineContent>
+                        </TimelineItem>)
+                }
+            )}
+        </Timeline>
+    )
+})
 
 const AboutCompany = observer(() => {
 
@@ -96,8 +144,15 @@ const AboutCompany = observer(() => {
 
                 {
                     (rootStore.aboutCompanyStore.company)
-                        ? <div>
-                            история
+                        ?
+                        <div
+                            style={{
+                                overflow: 'scroll',
+                                overflowY: 'scroll',
+                                overflowX: 'none',
+                            }}
+                        >
+                            <CompanyTimeline/>
                         </div>
                         : <Skeleton variant='rectangular' height={150} sx={classes.skeleton}/>
 

@@ -13,6 +13,7 @@ import navigationDotInactive from '../images/navigationDotInactive.svg'
 import theme from "../utils/theme";
 
 import {observer} from "mobx-react-lite";
+import rootStore from "../stores/rootStore";
 
 const classes = {
     root: {
@@ -104,7 +105,7 @@ const Header = observer(() => {
                 <Container maxWidth='lg'>
                     <Toolbar variant='dense'>
                         <Typography sx={classes.upperAppBarDate} variant='subtitle2'>
-                            1 ноября 2021, четная неделя
+                            {rootStore.globalDataStore.todayDate}
                         </Typography>
                         <Typography sx={classes.upperAppBarScheduleLink} variant='subtitle2'>
                             <CalendarTodayIcon sx={{fontSize: '0.95rem'}}/> Расписание
