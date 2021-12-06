@@ -1,6 +1,7 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import {baseURL} from "../utils/API";
 import {PIE_CHART_COLORS} from "../utils/pieChartColors";
+import rootStore from "./rootStore";
 
 
 class AboutCompanyStore {
@@ -11,8 +12,8 @@ class AboutCompanyStore {
 
     pieChartData = {};
 
-    isOpen = false; //TODO: поменять на false
-    isCardChoosen = false;
+    isOpen = true; //TODO: поменять на false
+    isCardChosen = true;
     isFetching = false;
 
     rootStore;
@@ -79,6 +80,13 @@ class AboutCompanyStore {
     openOrCloseAboutCompanyPanel() {
         runInAction(() => {
             this.isOpen = !this.isOpen
+        })
+    }
+
+    changeIsCardChosen(){
+        runInAction(() => {
+            console.log("1")
+            this.isCardChosen =  !this.isCardChosen
         })
     }
 

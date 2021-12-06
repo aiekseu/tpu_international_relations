@@ -104,7 +104,7 @@ const CompanyTimeline = observer(() => {
     )
 })
 
-const AboutCompany = observer(() => {
+const AboutCompanyCard = observer(() => {
 
     return (
         <Paper
@@ -164,4 +164,4 @@ const AboutCompany = observer(() => {
 })
 
 
-export default AboutCompany
+export default AboutCompanyCard

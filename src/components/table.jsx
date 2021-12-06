@@ -1,14 +1,9 @@
 import React from 'react';
 import {IconButton, Paper, Skeleton, Stack, Typography} from "@mui/material";
-
 import {observer} from "mobx-react-lite";
-
-
 import CloseIcon from '@mui/icons-material/Close';
-
 import rootStore from '../stores/rootStore'
-import MyPieChart from "./pieChart";
-
+import TableB from "./tableB";
 const windowHeight = window.innerHeight;
 
 const classes = {
@@ -75,7 +70,8 @@ const CompanyTable = observer(() => {
                         <Typography sx={classes.companyName}>
                             {rootStore.aboutCompanyStore.company.name}
                         </Typography>
-                        : <Skeleton variant='rectangular' height={40} sx={classes.skeleton}/>
+                        :
+                        <Skeleton variant='rectangular' height={40} sx={classes.skeleton}/>
                 }
 
 
@@ -87,8 +83,7 @@ const CompanyTable = observer(() => {
                 >
                     <CloseIcon style={{fontSize: '1.4rem'}}/>
                 </IconButton>
-
-                
+                <TableB/>
             </Stack>
         </Paper>
     )

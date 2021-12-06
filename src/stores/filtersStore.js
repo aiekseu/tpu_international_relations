@@ -12,6 +12,8 @@ class FiltersStore {
         expiringSoon: false
     };
 
+    isTable = false;
+    isPieChart = true;
     isOpen = true;
 
     countryKey = Math.random();

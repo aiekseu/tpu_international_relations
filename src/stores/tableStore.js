@@ -7,6 +7,8 @@ class TableStore {
 
     rootStore;
 
+    agreementsList =[];
+
     constructor(rootStore) {
         makeAutoObservable(this)
         this.rootStore = rootStore

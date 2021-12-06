@@ -3,9 +3,10 @@ import NewCustomMap from "../components/map";
 import AboutCompanyCard from "../components/aboutCompany";
 import {observer} from "mobx-react-lite";
 import rootStore from "../stores/rootStore";
-import {Grid, Typography} from "@mui/material";
+import {Grid, Table, Typography} from "@mui/material";
 import ChipBox from "../components/chipBox";
 import CompanyTable from "../components/table";
+import InfButtons from "../components/InfButtons";
 
 const classes = {
     root: {
@@ -23,7 +24,7 @@ const classes = {
         left: 48,
     },
     searchAgreement: {
-        height: 125,
+        height: "15%",
     },
     searchAgreementText: {
         marginLeft: "3%",
@@ -31,11 +32,16 @@ const classes = {
         fontWeight: 'bold',
         fontSize: '3.5rem',
         color: "#5B5B5B",
+        paddingBottom: "0",
         textShadow: '0px 4px 22px rgba(68, 94, 111, 0.1)',
     },
     chips: {
         marginLeft: "2%",
         width: "80%",
+    },
+    cont: {
+        display: "flex",
+        width: "100%",
     },
 }
 
@@ -47,32 +53,37 @@ const Agreements = () => {
                 <Typography style={classes.searchAgreementText}>
                     Поиск договоров
                 </Typography>
-                <Grid
-                    sx={classes.chips}
-                    container
-                    spacing={2}
-                >
-                    <ChipBox text={rootStore.filtersStore.country?.name ?? ""}
-                             f={() => {
-                                 rootStore.filtersStore.updateCountry(null)
-                             }}
-                    />
-                    <ChipBox text={rootStore.filtersStore.engineeringSchool?.name ?? ""}
-                             f={() => {
-                                 rootStore.filtersStore.updateEngineeringSchool(null)
-                             }}
-                    />
-                    <ChipBox text={(rootStore.filtersStore.representative?.second_name ?? "") + " " + (rootStore.filtersStore.representative?.first_name ?? "")}
-                             f={() => {
-                                 rootStore.filtersStore.updateRepresentative(null)
-                             }}
-                    />
-                    <ChipBox text={rootStore.filtersStore.agrType?.name ?? ""}
-                             f={() => {
-                                 rootStore.filtersStore.updateAgrType(null)
-                             }}
-                    />
-                </Grid>
+                <div style={classes.cont}>
+                    <Grid
+                        sx={classes.chips}
+                        container
+                        spacing={2}
+                    >
+                        <ChipBox text={rootStore.filtersStore.country?.name ?? ""}
+                                 f={() => {
+                                     rootStore.filtersStore.updateCountry(null)
+                                 }}
+                        />
+                        <ChipBox text={rootStore.filtersStore.engineeringSchool?.name ?? ""}
+                                 f={() => {
+                                     rootStore.filtersStore.updateEngineeringSchool(null)
+                                 }}
+                        />
+                        <ChipBox text={(rootStore.filtersStore.representative?.second_name ?? "") + " " + (rootStore.filtersStore.representative?.first_name ?? "")}
+                                 f={() => {
+                                     rootStore.filtersStore.updateRepresentative(null)
+                                 }}
+                        />
+                        <ChipBox text={rootStore.filtersStore.agrType?.name ?? ""}
+                                 f={() => {
+                                     rootStore.filtersStore.updateAgrType(null)
+                                 }}
+                        />
+                    </Grid>
+                    <div>
+                        <InfButtons/>
+                    </div>
+                </div>
             </div>
             <NewCustomMap/>
             <div style={classes.filters}>
@@ -82,7 +93,7 @@ const Agreements = () => {
             {/*  Карточка компании  */}
             <div
                 style={{ // Костыль, но нужный :(
-                    visibility: rootStore.aboutCompanyStore.isOpen && !rootStore.aboutCompanyStore.isCardChoosen ? 'visible' : 'hidden',
+                    visibility: rootStore.aboutCompanyStore.isOpen && rootStore.aboutCompanyStore.isCardChosen ? 'visible' : 'hidden',
                     position: 'absolute',
                     top: 142,
                     right: 80
@@ -94,7 +105,7 @@ const Agreements = () => {
             {/*  Таблица компании  */}
             <div
                 style={{ // Костыль, но нужный :(
-                    visibility: rootStore.aboutCompanyStore.isOpen && rootStore.aboutCompanyStore.isCardChoosen ? 'visible' : 'hidden',
+                    visibility: rootStore.aboutCompanyStore.isOpen && !rootStore.aboutCompanyStore.isCardChosen ? 'visible' : 'hidden',
                     position: 'absolute',
                     top: 142,
                     right: 80
