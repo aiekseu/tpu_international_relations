@@ -5,7 +5,6 @@ import rootStore from "./rootStore";
 
 
 class AboutCompanyStore {
-
     company = {};
     companyAgreements = [];
     timeLineData = [];
@@ -13,7 +12,7 @@ class AboutCompanyStore {
     pieChartData = {};
 
     isOpen = true; //TODO: поменять на false
-    isCardChosen = true;
+    isCardChosen = true; // информация о компании карточкой или таблицей
     isFetching = false;
 
     rootStore;
@@ -23,6 +22,7 @@ class AboutCompanyStore {
         this.rootStore = rootStore
     }
 
+    // Получение договров компании и формирование массива данных для PieChart
     fetchAgreements(company) {
         this.changeIsFetchingState()
         fetch(`${baseURL}/agreements?id_company=${company.id}`)
@@ -58,6 +58,7 @@ class AboutCompanyStore {
 
     }
 
+    // Данные об истории отношений
     fetchTimeLineData(company) {
         fetch(`${baseURL}/timeline/${company.id}`)
             .then(response => response.json())
@@ -85,7 +86,6 @@ class AboutCompanyStore {
 
     changeIsCardChosen(){
         runInAction(() => {
-            console.log("1")
             this.isCardChosen =  !this.isCardChosen
         })
     }

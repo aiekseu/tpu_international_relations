@@ -1,8 +1,8 @@
 import {Chip, Grid, Grow} from "@mui/material";
 
-const ChipBox = ({text, f}) =>{
+const ChipBox = ({text, f}) => {
     let t = false
-    if ((text !== "")&(text !== " ")) {
+    if ((text !== "") && (text !== " ")) {
         t = true
     }
     if (t) return (
@@ -12,8 +12,10 @@ const ChipBox = ({text, f}) =>{
             <Grid item>
                 <Chip label={text} variant="outlined" onDelete={f}/>
             </Grid>
-        </Grow>)
-    else return null
+        </Grow>
+    )
+    else
+        return null
 }
 
 export default ChipBox

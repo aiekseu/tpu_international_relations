@@ -48,6 +48,7 @@ const classes = {
     },
 }
 
+// Функция для корректного использования падежей
 function VValidator(value, str1, str2, str3) {
     let lastDigit = value % 10;
     if ((lastDigit === 0) || (lastDigit > 4)) {

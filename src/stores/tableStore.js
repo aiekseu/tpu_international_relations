@@ -1,13 +1,8 @@
-import {makeAutoObservable, runInAction} from "mobx";
+import {makeAutoObservable} from "mobx";
 
 class TableStore {
-    pieChartData = {};
-
     isFetching = false;
-
     rootStore;
-
-    agreementsList =[];
 
     constructor(rootStore) {
         makeAutoObservable(this)

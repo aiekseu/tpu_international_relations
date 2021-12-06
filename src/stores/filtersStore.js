@@ -13,9 +13,9 @@ class FiltersStore {
     };
 
     isTable = false;
-    isPieChart = true;
     isOpen = true;
 
+    // ключи для Autocomplete компонентов
     countryKey = Math.random();
     representativeKey = Math.random();
     engineeringSchoolKey = Math.random();
@@ -52,6 +52,7 @@ class FiltersStore {
         if (engineeringSchool === null) this.engineeringSchoolKey++;
     }
 
+    // Функция клика по кнопке "Найти"
     findCompanies() {
         this.rootStore.globalDataStore.updateCompanies({
             country: this.country ?? {},
@@ -68,6 +69,7 @@ class FiltersStore {
         })
     }
 
+    // Для клика на компанию в списке
     setCurrentCompany(company) {
         this.rootStore.aboutCompanyStore.setCompany(company)
     }

@@ -101,6 +101,7 @@ const Header = observer(() => {
 
     return (
         <AppBar position="static" elevation={0} style={{backgroundColor: 'rgba(205,240,170,0.61)'}}>
+            {/* Верхний (черный) аппбар */}
             <Container sx={classes.upperAppBar} style={{padding: 0, maxWidth: '100%'}}>
                 <Container maxWidth='lg'>
                     <Toolbar variant='dense'>
@@ -125,6 +126,8 @@ const Header = observer(() => {
                     </Toolbar>
                 </Container>
             </Container>
+
+            {/* Нижний (зеленый) аппбар */}
             <Container maxWidth='lg' sx={classes.appBar}>
                 <Toolbar>
                     <img src={tpuDarkIcon} style={classes.menuButton} alt="ТПУ"/>

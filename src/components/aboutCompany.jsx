@@ -1,13 +1,5 @@
 import React from 'react';
 import {IconButton, Paper, Skeleton, Stack, Typography} from "@mui/material";
-
-import {observer} from "mobx-react-lite";
-
-
-import CloseIcon from '@mui/icons-material/Close';
-
-import rootStore from '../stores/rootStore'
-import MyPieChart from "./pieChart";
 import {
     Timeline,
     TimelineConnector,
@@ -17,6 +9,13 @@ import {
     TimelineOppositeContent,
     TimelineSeparator
 } from "@mui/lab";
+
+import {observer} from "mobx-react-lite";
+
+import CloseIcon from '@mui/icons-material/Close';
+
+import rootStore from '../stores/rootStore'
+import MyPieChart from "./pieChart";
 
 const windowHeight = window.innerHeight;
 
@@ -78,6 +77,7 @@ const classes = {
     }
 }
 
+// история отношений
 const CompanyTimeline = observer(() => {
 
     return (
@@ -116,7 +116,7 @@ const AboutCompanyCard = observer(() => {
                     Информация о компании
                 </Typography>
 
-
+                {/*  Название компании  */}
                 {
                     (rootStore.aboutCompanyStore.company)
                         ?
@@ -126,7 +126,7 @@ const AboutCompanyCard = observer(() => {
                         : <Skeleton variant='rectangular' height={40} sx={classes.skeleton}/>
                 }
 
-
+                {/*  Кнопка "закрыть"  */}
                 <IconButton
                     sx={classes.closeButton}
                     onClick={() => {
@@ -142,6 +142,7 @@ const AboutCompanyCard = observer(() => {
                     История отношений
                 </Typography>
 
+                {/*  История взаимоотношений  */}
                 {
                     (rootStore.aboutCompanyStore.company)
                         ?
@@ -155,9 +156,7 @@ const AboutCompanyCard = observer(() => {
                             <CompanyTimeline/>
                         </div>
                         : <Skeleton variant='rectangular' height={150} sx={classes.skeleton}/>
-
                 }
-
             </Stack>
         </Paper>
     )

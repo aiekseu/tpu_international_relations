@@ -22,6 +22,7 @@ const classes = {
     }
 }
 
+// Тултип при наведении на сектор диаграммы
 const CustomTooltip = ({active, payload, label}) => {
     if (active) {
         return (
@@ -33,6 +34,7 @@ const CustomTooltip = ({active, payload, label}) => {
     return null;
 };
 
+// Смещенный лейбл сектора диаграммы (цифра с кол-вом договоров)
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -69,7 +71,6 @@ const MyPieChart = () => {
                     <Tooltip
                         content={CustomTooltip}
                     />
-
                 </PieChart>
             </ResponsiveContainer>
 

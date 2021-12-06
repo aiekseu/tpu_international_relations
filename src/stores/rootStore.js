@@ -6,6 +6,7 @@ import kpiStore from "./kpiStore";
 import TableStore from "./tableStore";
 
 class RootStore {
+    // Реализация синглтона
     kpiStore;
     filtersStore;
     globalDataStore;
