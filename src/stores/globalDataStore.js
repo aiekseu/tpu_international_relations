@@ -12,6 +12,8 @@ class GlobalDataStore {
 
     isFetching = false; // для отображения процесса загрузки
 
+    isAuthorized = true; //TODO: false
+
     constructor(rootStore) {
         makeAutoObservable(this)
         this.rootStore = rootStore
@@ -142,6 +144,10 @@ class GlobalDataStore {
         }
 
         return (day + " " + fMonth + " " + year + ', ' + oddness);
+    }
+
+    authorize() {
+        this.isAuthorized = !this.isAuthorized;
     }
 }
 

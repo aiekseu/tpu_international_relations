@@ -1,6 +1,6 @@
 import {Chip, Grid, Paper, Typography,} from "@mui/material";
-import background1 from "../images/Vector.png"
-import background2 from "../images/Vector1.png"
+import background1 from "../images/bg_1.png"
+import background2 from "../images/bg_2.png"
 
 
 const classes = {

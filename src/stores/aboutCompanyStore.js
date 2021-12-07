@@ -96,6 +96,7 @@ class AboutCompanyStore {
         })
     }
 
+
 }
 
 export default AboutCompanyStore

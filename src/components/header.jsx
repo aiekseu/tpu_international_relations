@@ -58,7 +58,9 @@ const classes = {
         textAlign: 'right',
         fontSize: '0.85rem',
         fontFamily: "'Montserrat', sans-serif",
-        fontWeight: 500
+        fontWeight: 500,
+        cursor: 'pointer',
+        whiteSpace: 'pre-line'
     },
     appBar: {
         backgroundColor: 'transparent',
@@ -117,11 +119,19 @@ const Header = observer(() => {
                         <Link sx={classes.upperAppBarLanguageButton}>
                             En
                         </Link>
-                        <IconButton sx={classes.upperAppBarAuthorizeButton}>
+                        <IconButton sx={classes.upperAppBarAuthorizeButton} onClick={() => {
+                            rootStore.globalDataStore.authorize()
+                        }}>
                             <AccountCircleOutlinedIcon/>
                         </IconButton>
-                        <Typography sx={classes.upperAppBarAuthorizeText}>
-                            Авторизоваться<br/>как сотрудник
+                        <Typography sx={classes.upperAppBarAuthorizeText} onClick={() => {
+                            rootStore.globalDataStore.authorize()
+                        }}>
+                            {rootStore.globalDataStore.isAuthorized
+                                ? 'Выйти'
+                                : `Авторизоваться 
+                                как сотрудник`
+                            }
                         </Typography>
                     </Toolbar>
                 </Container>
