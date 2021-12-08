@@ -1,15 +1,8 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import rootStore from "../stores/rootStore";
-import {useState} from "react";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
+
 import {observer} from "mobx-react-lite";
+import rootStore from "../stores/rootStore";
 
 const columns = [
     {
@@ -110,18 +103,18 @@ function createData(num, agrType, comment, startDate, endDate, representativeNam
     };
 }
 
- const CompanyTable = () => {
+const CompanyTable = () => {
     const companyAgreements = rootStore.aboutCompanyStore.companyAgreements;
     const [rows, setRows] = React.useState([]);
+
     React.useEffect(() => {
-        console.log(companyAgreements)
         let tempRows = []
         for (let i = 0; i < companyAgreements.length; i++) {
             let representative = companyAgreements[i].representative
             let type = companyAgreements[i].agreement_type
             let partner = companyAgreements[i].partner
             tempRows.push(createData(
-                companyAgreements[i]?.id ?? "-",
+                i+1,
                 type.name,
                 companyAgreements[i].comments,
                 companyAgreements[i]?.start_date ?? "-",
@@ -137,50 +130,52 @@ function createData(num, agrType, comment, startDate, endDate, representativeNam
         }
         setRows(tempRows)
     }, [companyAgreements])
+
+
     return (
-        <Paper>
-            <TableContainer sx={{maxHeight: 360}}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{
-                                        padding: 8,
-                                        backgroundColor: '#69BC00',
-                                        color: '#FFFFFF'
-                                    }}
-                                >
+        <TableContainer>
+            <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                    <TableRow>
+                        {columns.map((column) => (
+                            <TableCell
+                                key={Math.random()}
+                                style={{
+                                    padding: 8,
+                                    backgroundColor: '#69BC00',
+                                    color: '#FFFFFF',
+                                    maxLines: 2
+                                }}
+                                variant='head'
+                            >
+                                <Typography >
                                     {column.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows
-                            .map((row) => {
+                                </Typography>
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {rows.map((row) =>
+                        <TableRow hover key={Math.random()}>
+                            {columns.map((column) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                                        {columns.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <TableCell sx={{padding: '8px'}} key={column.id} align={column.align}>
-                                                    {column.format && typeof value === 'number'
-                                                        ? column.format(value)
-                                                        : value}
-                                                </TableCell>
-                                            );
-                                        })}
-                                    </TableRow>
+                                    <TableCell
+                                        sx={{padding: '8px'}}
+                                        key={Math.random()}
+                                        variant='body'
+                                    >
+                                        {row[column.id]}
+                                    </TableCell>
                                 );
                             })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table>
+        </TableContainer>
 
-        </Paper>
+
     );
 }
 
