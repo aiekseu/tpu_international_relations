@@ -151,6 +151,7 @@ const CompanyTable = () => {
                             >
                                 <Typography width={column.width}>
                                     {column.label}
+
                                 </Typography>
                             </TableCell>
                         ))}

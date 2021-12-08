@@ -12,7 +12,7 @@ class GlobalDataStore {
 
     isFetching = false; // для отображения процесса загрузки
 
-    isAuthorized = true; //TODO: false
+    isAuthorized = false; //TODO: false
 
     constructor(rootStore) {
         makeAutoObservable(this)
