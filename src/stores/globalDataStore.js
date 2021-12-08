@@ -10,7 +10,9 @@ class GlobalDataStore {
     companiesList = [];
     agreementsList = [];
 
-    isFetching = false;
+    isFetching = false; // для отображения процесса загрузки
+
+    isAuthorized = true; //TODO: false
 
     constructor(rootStore) {
         makeAutoObservable(this)
@@ -18,6 +20,7 @@ class GlobalDataStore {
         this.fetchData()
     }
 
+    // Получение всех стран, инженерных школ, ответственных лиц в тпу, типов договров, компаний
     fetchData() {
         fetch('https://tpu-international-backend.herokuapp.com/api/countries')
             .then(response => response.json())
@@ -56,6 +59,7 @@ class GlobalDataStore {
             })
     }
 
+    // выбор компании из списка или на карте
     updateCompanies({country, agrType, engineeringSchool, representative, agrStates}) {
         this.changeFetchingState()
 
@@ -64,7 +68,7 @@ class GlobalDataStore {
         let engineeringSchoolID = toJS(engineeringSchool).id ?? null
         let representativeID = toJS(representative).id ?? null
 
-
+        // query-запрос для состояния договоров
         let agrStateQuery = '&state=';
         if (agrStates['active']) {
             agrStateQuery += 'active'
@@ -95,6 +99,7 @@ class GlobalDataStore {
                 })
             })
             .then(() => {
+                // центрирование и зум карты
                 this.rootStore.mapStore.setCenterAndZoom()
                 this.changeFetchingState()
             })
@@ -106,6 +111,7 @@ class GlobalDataStore {
         })
     }
 
+    // получение данных в формате "7 декабря 2021, нечетная неделя"
     get todayDate() {
         let date = new Date()
         let year = date.getFullYear()
@@ -138,6 +144,10 @@ class GlobalDataStore {
         }
 
         return (day + " " + fMonth + " " + year + ', ' + oddness);
+    }
+
+    authorize() {
+        this.isAuthorized = !this.isAuthorized;
     }
 }
 

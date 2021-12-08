@@ -1,13 +1,5 @@
 import React from 'react';
-import {IconButton, Paper, Skeleton, Stack, Typography} from "@mui/material";
-
-import {observer} from "mobx-react-lite";
-
-
-import CloseIcon from '@mui/icons-material/Close';
-
-import rootStore from '../stores/rootStore'
-import MyPieChart from "./pieChart";
+import {IconButton, Link, Paper, Skeleton, Stack, Typography} from "@mui/material";
 import {
     Timeline,
     TimelineConnector,
@@ -17,6 +9,14 @@ import {
     TimelineOppositeContent,
     TimelineSeparator
 } from "@mui/lab";
+
+import {observer} from "mobx-react-lite";
+
+import CloseIcon from '@mui/icons-material/Close';
+import {Edit} from "@mui/icons-material";
+
+import rootStore from '../stores/rootStore'
+import MyPieChart from "./pieChart";
 
 const windowHeight = window.innerHeight;
 
@@ -75,19 +75,28 @@ const classes = {
         fontWeight: 300,
         fontSize: '0.75rem',
         color: '#707070'
+    },
+    editButton: {
+        textAlign: 'right',
+        marginBottom: -1.5,
+        marginRight: -1.5,
+        color: '#2a2a2a',
+        cursor: 'pointer'
     }
 }
 
+// история отношений
 const CompanyTimeline = observer(() => {
 
+    //TODO: slice().reverse() на бэке
     return (
         <Timeline position="right" sx={classes.timeline}>
-            {rootStore.aboutCompanyStore.timeLineData.map((agrState, index) => {
+            {rootStore.aboutCompanyStore.timeLineData.slice().reverse().map((agrState, index) => {
                     return (
-                        <TimelineItem key={agrState.id_agreement}>
+                        <TimelineItem key={Math.random()}>
                             <TimelineSeparator>
                                 <TimelineConnector/>
-                                <TimelineDot color={agrState.is_valid ? 'success' : 'error'}/>
+                                <TimelineDot color={agrState.is_end_date ? 'error' : 'success'}/>
                                 <TimelineConnector/>
                             </TimelineSeparator>
                             <TimelineOppositeContent style={{display: 'none'}}/>
@@ -95,7 +104,7 @@ const CompanyTimeline = observer(() => {
                                 <Typography sx={classes.timeLineAgrType}>
                                     {agrState.agr_type_name}
                                 </Typography>
-                                <Typography sx={classes.timeLineAgrDate}>{agrState.end_date ?? 'Неизвестная дата'}</Typography>
+                                <Typography sx={classes.timeLineAgrDate}>{agrState.date ?? 'Неизвестная дата'}</Typography>
                             </TimelineContent>
                         </TimelineItem>)
                 }
@@ -116,7 +125,7 @@ const AboutCompanyCard = observer(() => {
                     Информация о компании
                 </Typography>
 
-
+                {/*  Название компании  */}
                 {
                     (rootStore.aboutCompanyStore.company)
                         ?
@@ -126,7 +135,7 @@ const AboutCompanyCard = observer(() => {
                         : <Skeleton variant='rectangular' height={40} sx={classes.skeleton}/>
                 }
 
-
+                {/*  Кнопка "закрыть"  */}
                 <IconButton
                     sx={classes.closeButton}
                     onClick={() => {
@@ -142,6 +151,7 @@ const AboutCompanyCard = observer(() => {
                     История отношений
                 </Typography>
 
+                {/*  История взаимоотношений  */}
                 {
                     (rootStore.aboutCompanyStore.company)
                         ?
@@ -150,14 +160,24 @@ const AboutCompanyCard = observer(() => {
                                 overflow: 'scroll',
                                 overflowY: 'scroll',
                                 overflowX: 'none',
+                                height: '100%'
                             }}
                         >
                             <CompanyTimeline/>
                         </div>
                         : <Skeleton variant='rectangular' height={150} sx={classes.skeleton}/>
-
                 }
 
+                {
+                    (rootStore.globalDataStore.isAuthorized)
+                        ? <Link
+                            sx={classes.editButton}
+                            onClick={() => {
+                                rootStore.editStore.openEditCompanyDialog()
+                            }}
+                        ><Edit/>Редактировать</Link>
+                        : <></>
+                }
             </Stack>
         </Paper>
     )

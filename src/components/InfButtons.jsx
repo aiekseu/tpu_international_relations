@@ -10,25 +10,27 @@ const InfButtons = () => {
     const [alignment, setAlignment] = React.useState("pieChart");
 
     const handleAlignment = (event, newAlignment) => {
-        if (newAlignment!= null){
+        if (newAlignment != null) {
             setAlignment(newAlignment);
             rootStore.aboutCompanyStore.changeIsCardChosen()
         }
     };
 
-    return (<ToggleButtonGroup
-        color="standard"
-        exclusive
-        value={alignment}
-        onChange={handleAlignment}
+    return (
+        <ToggleButtonGroup
+            color="standard"
+            exclusive
+            value={alignment}
+            onChange={handleAlignment}
         >
-            <ToggleButton  value="table">
-                <ViewListIcon />
+            <ToggleButton value="table">
+                <ViewListIcon/>
             </ToggleButton>
-            <ToggleButton  value="pieChart">
-                <ViewQuiltIcon />
+            <ToggleButton value="pieChart">
+                <ViewQuiltIcon/>
             </ToggleButton>
-        </ToggleButtonGroup>)
+        </ToggleButtonGroup>
+    )
 }
 
 export default InfButtons

@@ -4,6 +4,7 @@ import theme from "./utils/theme";
 import Header from "./components/header";
 import Agreements from "./panels/agreementsSec";
 import KPIs from "./panels/kpiSec";
+import EditData from "./panels/editSec";
 
 const App = () => {
 
@@ -26,6 +27,7 @@ const App = () => {
                     {/* Секции лендинга из ../panels */}
                     <KPIs/>
                     <Agreements/>
+                    <EditData />
                 </ThemeProvider>
             </>
     )

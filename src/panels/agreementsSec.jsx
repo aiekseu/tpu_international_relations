@@ -3,7 +3,7 @@ import NewCustomMap from "../components/map";
 import AboutCompanyCard from "../components/aboutCompany";
 import {observer} from "mobx-react-lite";
 import rootStore from "../stores/rootStore";
-import {Grid, Table, Typography} from "@mui/material";
+import {Grid, Typography} from "@mui/material";
 import ChipBox from "../components/chipBox";
 import CompanyTable from "../components/table";
 import InfButtons from "../components/InfButtons";
@@ -85,7 +85,12 @@ const Agreements = () => {
                     </div>
                 </div>
             </div>
+
+
+            {/*  Карта  */}
             <NewCustomMap/>
+
+            {/*  Фильтры  */}
             <div style={classes.filters}>
                 <Filters/>
             </div>

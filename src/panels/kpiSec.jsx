@@ -1,10 +1,10 @@
 import {Grid,} from "@mui/material";
-import background1 from "../images/Vector.png"
-import background2 from "../images/Vector1.png"
-import icon from "../images/icon (2).svg"
-import icon1 from "../images/icon (1).svg"
-import icon2 from "../images/icon (3).svg"
-import icon3 from "../images/icon (4).svg"
+import background1 from "../images/bg_1.png"
+import background2 from "../images/bg_2.png"
+import icon from "../images/kpi_2.svg"
+import icon1 from "../images/kpi_1.svg"
+import icon2 from "../images/kpi_3.svg"
+import icon3 from "../images/kpi_4.svg"
 import GlobalData from "../stores/globalDataStore";
 import {observer} from "mobx-react-lite";
 import KPI from "../components/KPI";
@@ -48,6 +48,7 @@ const classes = {
     },
 }
 
+// Функция для корректного использования падежей
 function VValidator(value, str1, str2, str3) {
     let lastDigit = value % 10;
     if ((lastDigit === 0) || (lastDigit > 4)) {

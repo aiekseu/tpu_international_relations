@@ -29,8 +29,8 @@ const NewCustomMap = () => {
         <YMaps className={classes.map}>
             <Map
                 state={{
-                    center: [56.465409, 84.950182], //Координаты ТПУ
-                    zoom: 13,
+                    center: [10,-30],
+                    zoom: 2,
                     behaviors: ["disable('scrollZoom')", "drag"]
                 }}
                 options={{

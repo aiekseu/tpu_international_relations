@@ -34,6 +34,22 @@ let theme = createTheme({
                 }
             }
         },
+        MuiOutlinedInput: {
+            styleOverrides: {
+                input: {
+                    padding: 4,
+                    paddingLeft: 8,
+                    fontSize: '0.95rem'
+                },
+                root: {
+                    paddingTop: 2,
+                    paddingBottom: 2,
+                    paddingLeft: 8,
+                    paddingRight: 8,
+                    fontSize: '0.95rem',
+                }
+            },
+        },
     },
 });
 theme = responsiveFontSizes(theme);

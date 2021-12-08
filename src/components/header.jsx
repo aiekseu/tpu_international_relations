@@ -58,7 +58,9 @@ const classes = {
         textAlign: 'right',
         fontSize: '0.85rem',
         fontFamily: "'Montserrat', sans-serif",
-        fontWeight: 500
+        fontWeight: 500,
+        cursor: 'pointer',
+        whiteSpace: 'pre-line'
     },
     appBar: {
         backgroundColor: 'transparent',
@@ -101,6 +103,7 @@ const Header = observer(() => {
 
     return (
         <AppBar position="static" elevation={0} style={{backgroundColor: 'rgba(205,240,170,0.61)'}}>
+            {/* Верхний (черный) аппбар */}
             <Container sx={classes.upperAppBar} style={{padding: 0, maxWidth: '100%'}}>
                 <Container maxWidth='lg'>
                     <Toolbar variant='dense'>
@@ -116,15 +119,25 @@ const Header = observer(() => {
                         <Link sx={classes.upperAppBarLanguageButton}>
                             En
                         </Link>
-                        <IconButton sx={classes.upperAppBarAuthorizeButton}>
+                        <IconButton sx={classes.upperAppBarAuthorizeButton} onClick={() => {
+                            rootStore.globalDataStore.authorize()
+                        }}>
                             <AccountCircleOutlinedIcon/>
                         </IconButton>
-                        <Typography sx={classes.upperAppBarAuthorizeText}>
-                            Авторизоваться<br/>как сотрудник
+                        <Typography sx={classes.upperAppBarAuthorizeText} onClick={() => {
+                            rootStore.globalDataStore.authorize()
+                        }}>
+                            {rootStore.globalDataStore.isAuthorized
+                                ? 'Выйти'
+                                : `Авторизоваться 
+                                как сотрудник`
+                            }
                         </Typography>
                     </Toolbar>
                 </Container>
             </Container>
+
+            {/* Нижний (зеленый) аппбар */}
             <Container maxWidth='lg' sx={classes.appBar}>
                 <Toolbar>
                     <img src={tpuDarkIcon} style={classes.menuButton} alt="ТПУ"/>

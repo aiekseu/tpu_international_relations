@@ -12,6 +12,7 @@ class MapStore {
         this.rootStore = rootStore;
     };
 
+    // Получение массива точек компаний для карты
     get features() {
         return this.rootStore.globalDataStore.companiesList
             .filter((company) => company !== null && company.location !== null)
@@ -47,11 +48,9 @@ class MapStore {
     setRefs(map, objectManager) {
         this.map = map;
         this.objectManager = objectManager;
-
-        // Происходит чудо и ивент добавляется 2 раза - второй удаляем
-        //objectManager.current.objects.events.types.click.pop()
     }
 
+    // Клик на Placemark (компанию) на карте
     setClickEvent() {
         this.objectManager.current?.objects.events.add('click', (e) => {
             // Используем айдишник для того, чтобы далее получить инфу по метке

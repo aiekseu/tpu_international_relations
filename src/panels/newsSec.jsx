@@ -1,6 +1,6 @@
 import {Chip, Grid, Paper, Typography,} from "@mui/material";
-import background1 from "../images/Vector.png"
-import background2 from "../images/Vector1.png"
+import background1 from "../images/bg_1.png"
+import background2 from "../images/bg_2.png"
 
 
 const classes = {
@@ -46,28 +46,32 @@ const classes = {
 }
 
 const News = () => {
-    return (<>
-        <Grid sx={classes.headContainer}
-              container
-              direction="row"
-        >
-            <Grid item sx={classes.head}>
-                Новости
+    return (
+        <>
+            <Grid sx={classes.headContainer}
+                  container
+                  direction="row"
+            >
+                <Grid item sx={classes.head}>
+                    Новости
+                </Grid>
             </Grid>
-        </Grid>
 
-        <div style={classes.mainContainer}>
-            <Newsbox></Newsbox>
+            <div style={classes.mainContainer}>
+                <Newsbox></Newsbox>
 
-            <img style={classes.background} src={background1} alt={"background1"}/>
-            <img style={classes.background} src={background2} alt={"background2"}/>
-        </div>
-        </>)
+                <img style={classes.background} src={background1} alt={"background1"}/>
+                <img style={classes.background} src={background2} alt={"background2"}/>
+            </div>
+        </>
+    )
 }
 
 const Newsbox = () => {
-    return(<>
-        <Paper sx={classes.newbox}></Paper>
-        </>)
+    return (
+        <>
+            <Paper sx={classes.newbox}></Paper>
+        </>
+    )
 }
 export default News
