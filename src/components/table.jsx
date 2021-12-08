@@ -15,7 +15,7 @@ const columns = [
     {
         id: 'agrType',
         label: 'Тип договора',
-        width: 200,
+        width: 150,
     },
     {
         id: 'comment',
@@ -40,7 +40,7 @@ const columns = [
     {
         id: 'representativeName',
         label: 'Ответственный',
-        width: 210,
+        width: 160,
     },
     {
         id: 'representativeEmail',
@@ -80,7 +80,7 @@ const columns = [
     {
         id: 'newsLink',
         label: 'Ссылка на новости',
-        width: 400,
+        width: 150,
         disableReorder: true,
         sortable: false,
     },
@@ -133,22 +133,23 @@ const CompanyTable = () => {
 
 
     return (
-        <TableContainer>
+        <TableContainer style={{borderRadius: 5,}}>
             <Table stickyHeader aria-label="sticky table">
-                <TableHead>
+                <TableHead >
                     <TableRow>
                         {columns.map((column) => (
                             <TableCell
                                 key={Math.random()}
                                 style={{
-                                    padding: 8,
+                                    paddingLeft:10,
+                                    paddingTop: 0,
+                                    paddingBottom: 0,
                                     backgroundColor: '#69BC00',
                                     color: '#FFFFFF',
-                                    maxLines: 2
                                 }}
                                 variant='head'
                             >
-                                <Typography >
+                                <Typography width={column.width}>
                                     {column.label}
                                 </Typography>
                             </TableCell>
@@ -174,8 +175,6 @@ const CompanyTable = () => {
                 </TableBody>
             </Table>
         </TableContainer>
-
-
     );
 }
 

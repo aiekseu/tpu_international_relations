@@ -13,7 +13,7 @@ const windowWidth = window.innerWidth;
 const classes = {
     root: {
         width: windowWidth -500,
-        height: windowHeight * 0.6,
+        maxHeight: windowHeight * 0.6,
         paddingTop: 2,
         paddingBottom: 3,
         paddingLeft: 4,
