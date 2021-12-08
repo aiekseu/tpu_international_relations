@@ -100,7 +100,7 @@ const KPIs = () => {
                         <KPI
                             background={icon1}
                             value={annualAgreementsNum}
-                            text={"договор" + VValidator(annualAgreementsNum, "ов", "", "а") + "за 2021г"}
+                            text={"договор" + VValidator(annualAgreementsNum, "ов", "", "а") + " за 2021г"}
                         />
                     </Grid>
                     <Grid item md={6} lg={3}>

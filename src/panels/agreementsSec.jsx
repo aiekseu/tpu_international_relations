@@ -5,7 +5,7 @@ import {observer} from "mobx-react-lite";
 import rootStore from "../stores/rootStore";
 import {Grid, Typography} from "@mui/material";
 import ChipBox from "../components/chipBox";
-import CompanyTable from "../components/table";
+import TableCard from "../components/tableCard";
 import InfButtons from "../components/InfButtons";
 
 const classes = {
@@ -60,29 +60,27 @@ const Agreements = () => {
                         spacing={2}
                     >
                         <ChipBox text={rootStore.filtersStore.country?.name ?? ""}
-                                 f={() => {
+                                 onDelete={() => {
                                      rootStore.filtersStore.updateCountry(null)
                                  }}
                         />
                         <ChipBox text={rootStore.filtersStore.engineeringSchool?.name ?? ""}
-                                 f={() => {
+                                 onDelete={() => {
                                      rootStore.filtersStore.updateEngineeringSchool(null)
                                  }}
                         />
                         <ChipBox text={(rootStore.filtersStore.representative?.second_name ?? "") + " " + (rootStore.filtersStore.representative?.first_name ?? "")}
-                                 f={() => {
+                                 onDelete={() => {
                                      rootStore.filtersStore.updateRepresentative(null)
                                  }}
                         />
                         <ChipBox text={rootStore.filtersStore.agrType?.name ?? ""}
-                                 f={() => {
+                                 onDelete={() => {
                                      rootStore.filtersStore.updateAgrType(null)
                                  }}
                         />
                     </Grid>
-                    <div>
-                        <InfButtons/>
-                    </div>
+                    <InfButtons/>
                 </div>
             </div>
 
@@ -116,7 +114,7 @@ const Agreements = () => {
                     right: 80
                 }}
             >
-                <CompanyTable/>
+                <TableCard/>
             </div>
         </div>
     )

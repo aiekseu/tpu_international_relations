@@ -1,16 +1,12 @@
 import {Chip, Grid, Grow} from "@mui/material";
 
-const ChipBox = ({text, f}) => {
-    let t = false
-    if ((text !== "") && (text !== " ")) {
-        t = true
-    }
-    if (t) return (
-        <Grow in={t}
+const ChipBox = ({text, onDelete}) => {
+    if (text.trim() !== "") return (
+        <Grow in={(text.trim() !== "")}
               orientation="vertical"
         >
             <Grid item>
-                <Chip label={text} variant="outlined" onDelete={f}/>
+                <Chip label={text} variant="outlined" onDelete={onDelete}/>
             </Grid>
         </Grow>
     )

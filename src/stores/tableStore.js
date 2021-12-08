@@ -6,11 +6,12 @@ class TableStore {
     pieChartData = {}
     isFetching = false;
     rootStore;
-
+    companyAgreements = [];
 
     constructor(rootStore) {
         makeAutoObservable(this)
         this.rootStore = rootStore
+        this.companyAgreements = rootStore.aboutCompanyStore.companyAgreements
     }
 
     openOrCloseTable() {

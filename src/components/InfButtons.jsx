@@ -22,6 +22,7 @@ const InfButtons = () => {
             exclusive
             value={alignment}
             onChange={handleAlignment}
+            style={{position: "absolute", right: 100, top: 48 }}
         >
             <ToggleButton value="table">
                 <ViewListIcon/>

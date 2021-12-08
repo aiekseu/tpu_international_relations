@@ -7,9 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import {renderCellExpand} from "./old/renderCellExpand";
 import rootStore from "../stores/rootStore";
 import {useState} from "react";
+import {observer} from "mobx-react-lite";
 
 const columns = [
     {
@@ -20,17 +20,14 @@ const columns = [
         sortable: false
     },
     {
-        id: 'status',
-        label: 'Состояние',
-        width: 50,
-        disableReorder: true,
-        sortable: false
-    },
-    {
         id: 'agrType',
         label: 'Тип договора',
         width: 200,
-        renderCell: renderCellExpand
+    },
+    {
+        id: 'comment',
+        label: "Комментарий",
+        width: 200,
     },
     {
         id: 'startDate',
@@ -51,15 +48,13 @@ const columns = [
         id: 'representativeName',
         label: 'Ответственный',
         width: 210,
-        renderCell: renderCellExpand
     },
     {
         id: 'representativeEmail',
-        label: 'E-mail',
+        label: 'Email',
         width: 150,
         disableReorder: true,
         sortable: false,
-        renderCell: renderCellExpand
     },
     {
         id: 'representativePhone',
@@ -68,57 +63,95 @@ const columns = [
         disableReorder: true,
         sortable: false
     },
+    {
+        id: 'partnerName',
+        label: 'Ответственный в организации',
+        width: 240,
+        disableReorder: true,
+        sortable: false,
+    },
+    {
+        id: 'partnerEmail',
+        label: 'Email',
+        width: 150,
+        disableReorder: true,
+        sortable: false,
+    },
+    {
+        id: 'partnerPhone',
+        label: 'Телефон',
+        width: 140,
+        disableReorder: true,
+        sortable: false
+    },
+    {
+        id: 'newsLink',
+        label: 'Ссылка на новости',
+        width: 400,
+        disableReorder: true,
+        sortable: false,
+    },
 ];
 
-function createData(num, status, agrType, startDate, endDate, representativeName, representativeEmail, representativePhone) {
-    return {num, status, agrType, startDate, endDate, representativeName, representativeEmail, representativePhone};
+function createData(num, agrType, comment, startDate, endDate, representativeName, representativeEmail, representativePhone, partnerName, partnerEmail, partnerPhone, newsLink) {
+    return {
+        num,
+        agrType,
+        comment,
+        startDate,
+        endDate,
+        representativeName,
+        representativeEmail,
+        representativePhone,
+        partnerName,
+        partnerEmail,
+        partnerPhone,
+        newsLink
+    };
 }
 
-export default function TableB() {
+ const CompanyTable = () => {
     const companyAgreements = rootStore.aboutCompanyStore.companyAgreements;
-    const [rows,setRows] = React.useState([]);
+    const [rows, setRows] = React.useState([]);
     React.useEffect(() => {
+        console.log(companyAgreements)
         let tempRows = []
         for (let i = 0; i < companyAgreements.length; i++) {
-            let representativeId = companyAgreements[i].id_representative
-            let statusId = companyAgreements[i].id_status
-            let typeId = companyAgreements[i].id_agr_type
-            let representatives = rootStore.globalDataStore.representativesList
-            let statuses = rootStore.globalDataStore.agreementTypesList
-            let types = rootStore.globalDataStore.agreementTypesList
-            let representative = representatives.find((element) => {
-                return element.id === representativeId
-            })
-            let status = statuses.find((e) =>{
-                return e.id === statusId
-            })
-            let type = types.find((e)=>{
-                return e.id === typeId
-            })
+            let representative = companyAgreements[i].representative
+            let type = companyAgreements[i].agreement_type
+            let partner = companyAgreements[i].partner
             tempRows.push(createData(
                 companyAgreements[i]?.id ?? "-",
-                companyAgreements[i].id_status,
                 type.name,
+                companyAgreements[i].comments,
                 companyAgreements[i]?.start_date ?? "-",
                 companyAgreements[i]?.end_date ?? "-",
                 representative.first_name + " " + representative.second_name,
                 representative?.phone ?? "-",
                 representative?.email ?? "-",
+                partner.first_name + " " + partner.second_name,
+                partner.email,
+                partner.phone,
+                partner.news_url
             ))
         }
         setRows(tempRows)
-    },[setRows])
+    }, [companyAgreements])
     return (
-        <Paper sx={{ width: '100%' }}>
-            <TableContainer sx={{ maxHeight: 360}}>
+        <Paper>
+            <TableContainer sx={{maxHeight: 360}}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
-                        <TableRow key={Math.random()}>
+                        <TableRow>
                             {columns.map((column) => (
                                 <TableCell
-                                    key ={column.id}
+                                    key={column.id}
                                     align={column.align}
-                                    style={{minWidth: column.minWidth , padding: 8, backgroundColor:'#69BC00', color: '#FFFFFF'}}
+                                    style={{
+                                        padding: 8,
+                                        backgroundColor: '#69BC00',
+                                        color: '#FFFFFF'
+                                    }}
                                 >
                                     {column.label}
                                 </TableCell>
@@ -133,7 +166,7 @@ export default function TableB() {
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
-                                                <TableCell sx={{padding:'8px'}} key={column.id} align={column.align}>
+                                                <TableCell sx={{padding: '8px'}} key={column.id} align={column.align}>
                                                     {column.format && typeof value === 'number'
                                                         ? column.format(value)
                                                         : value}
@@ -150,3 +183,5 @@ export default function TableB() {
         </Paper>
     );
 }
+
+export default observer(CompanyTable)

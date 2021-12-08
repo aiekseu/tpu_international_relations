@@ -4,12 +4,12 @@ import {observer} from "mobx-react-lite";
 import CloseIcon from '@mui/icons-material/Close';
 import rootStore from '../stores/rootStore'
 import TableB from "./tableB";
-import CompanyData from "./old/CompanyData";
+import CompanyTable from "./tableB";
 const windowHeight = window.innerHeight;
-
+const windowWidth = window.innerWidth;
 const classes = {
     root: {
-        width: 1000,
+        width: windowWidth -500,
         maxHeight: windowHeight * 0.6,
         paddingTop: 2,
         paddingBottom: 3,
@@ -52,7 +52,7 @@ const classes = {
     },
 }
 
-const CompanyTable = observer(() => {
+const TableCard = observer(() => {
 
     return (
         <Paper
@@ -84,11 +84,11 @@ const CompanyTable = observer(() => {
                 >
                     <CloseIcon style={{fontSize: '1.4rem'}}/>
                 </IconButton>
-                <TableB/>
+                <CompanyTable/>
             </Stack>
         </Paper>
     )
 })
 
 
-export default CompanyTable
+export default TableCard
