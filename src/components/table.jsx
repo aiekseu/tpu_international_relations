@@ -4,12 +4,13 @@ import {observer} from "mobx-react-lite";
 import CloseIcon from '@mui/icons-material/Close';
 import rootStore from '../stores/rootStore'
 import TableB from "./tableB";
+import CompanyData from "./old/CompanyData";
 const windowHeight = window.innerHeight;
 
 const classes = {
     root: {
-        width: 800,
-        height: windowHeight * 0.6,
+        width: 1000,
+        maxHeight: windowHeight * 0.6,
         paddingTop: 2,
         paddingBottom: 3,
         paddingLeft: 4,

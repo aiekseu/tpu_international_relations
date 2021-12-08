@@ -99,14 +99,14 @@ const KPIs = () => {
                         <KPI
                             background={icon1}
                             value={annualAgreementsNum}
-                            text={"университет" + VValidator(annualAgreementsNum, "ов", "", "а") + "-партнеров"}
+                            text={"договор" + VValidator(annualAgreementsNum, "ов", "", "а") + "за 2021г"}
                         />
                     </Grid>
                     <Grid item md={6} lg={3}>
                         <KPI
                             background={icon2}
                             value={companiesNum}
-                            text={"международн" + VValidator(researchesNum, "ых", "е", "ых") + " коллаборации"}
+                            text={"компан" + VValidator(researchesNum, "ий", "я", "ии") + " партнер" + VValidator(researchesNum,"ов","","а")}
                         />
 
                     </Grid>
@@ -114,7 +114,7 @@ const KPIs = () => {
                         <KPI
                             background={icon3}
                             value={researchesNum}
-                            text={"совместн" + VValidator(researchesNum, "ых", "е", "ых") + " исследования"}
+                            text={"совместн" + VValidator(researchesNum, "ых", "е", "ых") + " исследован" + VValidator(researchesNum, "ий", "е", "ия")}
                         />
                     </Grid>
                 </Grid>

@@ -7,79 +7,118 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import {renderCellExpand} from "./old/renderCellExpand";
+import rootStore from "../stores/rootStore";
+import {useState} from "react";
 
 const columns = [
     {
-        id: 'name',
-        label: 'Name',
-        minWidth: 100 },
-    {
-        id: 'code',
-        label: 'ISO Code',
-        minWidth: 100 },
-    {
-        id: 'population',
-        label: 'Population',
-        minWidth: 100,
-        align: 'right',
-        format: (value) => value.toLocaleString('en-US'),
+        id: 'num',
+        label: '№',
+        width: 50,
+        disableReorder: true,
+        sortable: false
     },
     {
-        id: 'size',
-        label: 'Size (km\u00b2)',
-        minWidth: 100,
-        align: 'right',
-        format: (value) => value.toLocaleString('en-US'),
+        id: 'status',
+        label: 'Состояние',
+        width: 50,
+        disableReorder: true,
+        sortable: false
     },
     {
-        id: 'density',
-        label: 'Density',
-        minWidth: 100,
-        align: 'right',
-        format: (value) => value.toFixed(2),
+        id: 'agrType',
+        label: 'Тип договора',
+        width: 200,
+        renderCell: renderCellExpand
+    },
+    {
+        id: 'startDate',
+        label: 'Регистрация',
+        width: 140,
+        type: "date",
+        disableReorder: true
+    },
+    {
+        id: 'endDate',
+        label: 'Окончание',
+        width: 140,
+        type: "date",
+        disableReorder: true,
+        sortable: false
+    },
+    {
+        id: 'representativeName',
+        label: 'Ответственный',
+        width: 210,
+        renderCell: renderCellExpand
+    },
+    {
+        id: 'representativeEmail',
+        label: 'E-mail',
+        width: 150,
+        disableReorder: true,
+        sortable: false,
+        renderCell: renderCellExpand
+    },
+    {
+        id: 'representativePhone',
+        label: 'Телефон',
+        width: 140,
+        disableReorder: true,
+        sortable: false
     },
 ];
 
-function createData(name, code, population, size) {
-    const density = population / size;
-    return { name, code, population, size, density };
+function createData(num, status, agrType, startDate, endDate, representativeName, representativeEmail, representativePhone) {
+    return {num, status, agrType, startDate, endDate, representativeName, representativeEmail, representativePhone};
 }
-const rows = [
-    createData('India', 'IN', 1324171354, 3287263),
-    createData('China', 'CN', 1403500365, 9596961),
-    createData('Italy', 'IT', 60483973, 301340),
-    createData('United States', 'US', 327167434, 9833520),
-    createData('Canada', 'CA', 37602103, 9984670),
-    createData('Australia', 'AU', 25475400, 7692024),
-    createData('Germany', 'DE', 83019200, 357578),
-    createData('Ireland', 'IE', 4857000, 70273),
-    createData('Mexico', 'MX', 126577691, 1972550),
-    createData('Japan', 'JP', 126317000, 377973),
-    createData('France', 'FR', 67022000, 640679),
-    createData('United Kingdom', 'GB', 67545757, 242495),
-    createData('Russia', 'RU', 146793744, 17098246),
-    createData('Nigeria', 'NG', 200962417, 923768),
-    createData('Brazil', 'BR', 210147125, 8515767),
-];
 
 export default function TableB() {
-    const [page, setPage] = React.useState(0);
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
+    const companyAgreements = rootStore.aboutCompanyStore.companyAgreements;
+    const [rows,setRows] = React.useState([]);
+    React.useEffect(() => {
+        let tempRows = []
+        for (let i = 0; i < companyAgreements.length; i++) {
+            let representativeId = companyAgreements[i].id_representative
+            let statusId = companyAgreements[i].id_status
+            let typeId = companyAgreements[i].id_agr_type
+            let representatives = rootStore.globalDataStore.representativesList
+            let statuses = rootStore.globalDataStore.agreementTypesList
+            let types = rootStore.globalDataStore.agreementTypesList
+            let representative = representatives.find((element) => {
+                return element.id === representativeId
+            })
+            let status = statuses.find((e) =>{
+                return e.id === statusId
+            })
+            let type = types.find((e)=>{
+                return e.id === typeId
+            })
+            tempRows.push(createData(
+                companyAgreements[i]?.id ?? "-",
+                companyAgreements[i].id_status,
+                type.name,
+                companyAgreements[i]?.start_date ?? "-",
+                companyAgreements[i]?.end_date ?? "-",
+                representative.first_name + " " + representative.second_name,
+                representative?.phone ?? "-",
+                representative?.email ?? "-",
+            ))
+        }
+        setRows(tempRows)
+    },[setRows])
     return (
         <Paper sx={{ width: '100%' }}>
             <TableContainer sx={{ maxHeight: 360}}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow key={Math.random()}>
                             {columns.map((column) => (
                                 <TableCell
-                                    key={column.id}
+                                    key ={column.id}
                                     align={column.align}
-                                    style={{minWidth: column.minWidth , padding: 8}}
+                                    style={{minWidth: column.minWidth , padding: 8, backgroundColor:'#69BC00', color: '#FFFFFF'}}
                                 >
                                     {column.label}
                                 </TableCell>
