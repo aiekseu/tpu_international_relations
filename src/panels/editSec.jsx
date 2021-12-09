@@ -13,16 +13,21 @@ import {
 import rootStore from "../stores/rootStore";
 import React from "react";
 import {toJS} from "mobx";
+import {Map, ObjectManager, Placemark, YMaps, ZoomControl} from "react-yandex-maps";
 
 const windowHeight = window.innerHeight;
 const windowWidth = window.innerWidth;
 
 const classes = {
+    dialog: {
+        color: '#fff',
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+    },
     root: {
         width: windowWidth * 0.5,
-        height: windowHeight * 0.5,
+        height: windowHeight * 0.6,
         paddingTop: 2,
-        paddingBottom: 3,
+        paddingBottom: 0,
         paddingLeft: 4,
         paddingRight: 4,
         display: 'flex'
@@ -43,14 +48,13 @@ const classes = {
         textAlign: 'center'
     },
     inputField: {
-        marginBottom: 1
+        marginBottom: 1,
     },
     label: {
       flex: 1
     },
     input: {
-        width: "100%",
-        flex: 3
+        flex: 4
     }
 }
 
@@ -58,9 +62,10 @@ const EditCompanyDialog = observer(() => {
 
     return (
         <Dialog
-            sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+            sx={classes.dialog}
             open={rootStore.editStore.isEditCompanyDialogOpen}
             onClose={rootStore.editStore.closeEditCompanyDialog}
+            maxWidth
         >
             <Paper
                 elevation={0}
@@ -121,7 +126,25 @@ const EditCompanyDialog = observer(() => {
                             clearOnBlur={true}
                         />
                     </Stack>
-
+                    <YMaps className={classes.map}>
+                        <Map
+                            state={{
+                                center: [39.29494801776605,-76.6153867684531],
+                                zoom: 5,
+                                behaviors: ["disable('scrollZoom')", "drag"]
+                            }}
+                            options={{
+                                maxZoom: 14,
+                                minZoom: 2,
+                                autoFitToViewport: 'always'
+                            }}
+                            width='100%'
+                            height={window.innerHeight * 0.85}
+                            modules={['control.ZoomControl', 'control.FullscreenControl']}
+                        >
+                            <Placemark geometry={[39.29494801776605,-76.6153867684531]}/>
+                        </Map>
+                    </YMaps>
                 </Stack>
             </Paper>
             <DialogActions>

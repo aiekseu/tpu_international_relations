@@ -11,7 +11,7 @@ class AboutCompanyStore {
 
     pieChartData = {};
 
-    isOpen = true; //TODO: поменять на false
+    isOpen = false; //TODO: поменять на false
     isCardChosen = true; // информация о компании карточкой или таблицей
     isFetching = false;
 

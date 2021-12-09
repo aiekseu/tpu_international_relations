@@ -37,12 +37,7 @@ class MapStore {
     }
 
     setCenterAndZoom() {
-        if (this.rootStore.globalDataStore.companiesList.length === 0) {
-            this.map?.current.setCenter([56.465409, 84.950182])
-            this.map?.current.setZoom(13)
-        } else {
-            this.map?.current.setBounds(this.objectManager?.current.getBounds());
-        }
+        this.map?.current.setBounds(this.objectManager?.current.getBounds());
     }
 
     setRefs(map, objectManager) {
