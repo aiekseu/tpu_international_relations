@@ -21,7 +21,8 @@ class TableStore {
 
     getAgrInf(i) {
         runInAction((i)=>{
-            console.log(rootStore.aboutCompanyStore.companyAgreements[i]?.agreement_type.name)
+            console.log(this.rootStore.aboutCompanyStore.companyAgreements)
+            console.log(this.rootStore.aboutCompanyStore.companyAgreements[i]?.agreement_type.name)
             console.log([this.companyAgreements[i]?.agreement_type.name, this.companyAgreements[i]?.comments])
             return(
                 i+1,

@@ -1,6 +1,5 @@
-import {Grid,} from "@mui/material";
-import background1 from "../images/bg_1.png"
-import background2 from "../images/bg_2.png"
+import {Button, Grid, Typography,} from "@mui/material";
+import earth from  "../images/earth.png"
 import icon from "../images/kpi_2.svg"
 import icon1 from "../images/kpi_1.svg"
 import icon2 from "../images/kpi_3.svg"
@@ -9,11 +8,12 @@ import GlobalData from "../stores/globalDataStore";
 import {observer} from "mobx-react-lite";
 import KPI from "../components/KPI";
 import rootStore from "../stores/rootStore";
+import ReactDOM from "react-dom";
 
 
 const classes = {
     headContainer: {
-        height: "360px",
+        height: "600px",
     },
     head: {
         marginTop: "5%",
@@ -46,6 +46,15 @@ const classes = {
         height: "400px",
         bottom: "0",
     },
+    button:{
+        width: 300,
+        fontWeight: 'bold',
+        fontSize: 14,
+        color: '#000000',
+        border: '2px solid #69BC00',
+        boxShadow: '0px 0px 20px rgba(138, 138, 138, 0.5)',
+        borderRadius: 10,
+    }
 }
 
 // Функция для корректного использования падежей
@@ -75,10 +84,15 @@ const KPIs = () => {
         <>
             <Grid sx={classes.headContainer}
                   container
-                  direction="row"
             >
-                <Grid item sx={classes.head}>
+                <Grid item sx={classes.head} width={700}>
                     Томский политех сегодня - это:
+                    <Typography style={{marginTop: 50}} width={500}>Университет, где ученые работают над передовыми исследованиями в крупных международных научных проектах, а студенты ежегодно участвуют в программах академической мобильности и проходят стажировки и практики в ведущих компаниях.</Typography>
+                    <Button variant="outlined" sx={classes.button} onClick={()=>{
+                        window.scrollTo({top: window.innerHeight+500, behavior: 'smooth'})}}>Поиск договоров</Button>
+                </Grid>
+                <Grid item style={{marginLeft: 100,marginTop: 100, visibility: (window.innerWidth < 1290) ? 'hidden' : 'visible'}}>
+                    <img src={earth}/>
                 </Grid>
             </Grid>
 
@@ -89,21 +103,21 @@ const KPIs = () => {
                     columnSpacing={2}
                     rowSpacing={10}
                 >
-                    <Grid item md={6} lg={3}>
+                    <Grid item xs={12} md={6} lg={3}>
                         <KPI
                             background={icon}
                             value={countriesNum}
                             text={"стран" + VValidator(countriesNum, "", "а", "ы") + ", с которыми заключены договоры"}
                         />
                     </Grid>
-                    <Grid item md={6} lg={3}>
+                    <Grid item xs={12} md={6} lg={3}>
                         <KPI
                             background={icon1}
                             value={annualAgreementsNum}
                             text={"договор" + VValidator(annualAgreementsNum, "ов", "", "а") + " за 2021г"}
                         />
                     </Grid>
-                    <Grid item md={6} lg={3}>
+                    <Grid item xs={12} md={6} lg={3}>
                         <KPI
                             background={icon2}
                             value={companiesNum}
@@ -111,7 +125,7 @@ const KPIs = () => {
                         />
 
                     </Grid>
-                    <Grid item md={6} lg={3}>
+                    <Grid item xs={12} md={6} lg={3}>
                         <KPI
                             background={icon3}
                             value={researchesNum}
@@ -119,9 +133,6 @@ const KPIs = () => {
                         />
                     </Grid>
                 </Grid>
-
-                <img style={classes.background} src={background1} alt={"background1"}/>
-                <img style={classes.background} src={background2} alt={"background2"}/>
             </div>
         </>
     )
