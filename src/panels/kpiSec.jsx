@@ -69,7 +69,7 @@ function VValidator(value, str1, str2, str3) {
     if (lastDigit < 5) {
         return str3;//прим. "2 страны"
     }
-    return ("Error in VValidator")
+    return ("")
 }
 
 const globalData = new GlobalData();
@@ -121,7 +121,7 @@ const KPIs = () => {
                         <KPI
                             background={icon2}
                             value={companiesNum}
-                            text={"компан" + VValidator(researchesNum, "ий", "я", "ии") + " партнер" + VValidator(researchesNum,"ов","","а")}
+                            text={"компан" + VValidator(companiesNum, "ий", "я", "ии") + " партнер" + VValidator(companiesNum,"ов","","а")}
                         />
 
                     </Grid>
