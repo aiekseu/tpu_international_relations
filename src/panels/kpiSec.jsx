@@ -74,7 +74,7 @@ function VValidator(value, str1, str2, str3) {
     if (lastDigit < 5) {
         return str3;//прим. "2 страны"
     }
-    return ("Error in VValidator")
+    return ("")
 }
 
 const KPIs = () => {
