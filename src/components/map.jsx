@@ -14,7 +14,7 @@ const classes = {
     },
     map: {
         padding: 0,
-        height: window.innerHeight * 0.85,
+        height: window.innerHeight - 120,
         width: window.innerWidth,
         marginRight: 'auto'
     }

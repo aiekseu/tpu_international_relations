@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
+import {Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 
 import {observer} from "mobx-react-lite";
 import rootStore from "../stores/rootStore";

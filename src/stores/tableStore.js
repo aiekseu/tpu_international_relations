@@ -1,7 +1,4 @@
 import {makeAutoObservable, runInAction} from "mobx";
-import {baseURL} from "../utils/API";
-import {PIE_CHART_COLORS} from "../utils/pieChartColors";
-import rootStore from "./rootStore";
 
 class TableStore {
     pieChartData = {}

@@ -1,11 +1,19 @@
 import {Container, Paper, Stack, Typography} from "@mui/material";
 
 const classes = {
+    KPI: {
+        position: "relative",
+        transitionDuration: '200ms',
+        textAlign: 'center',
+        "&:hover": {
+            transform: "scale(1.25)",
+        },
+    },
     card: {
         display: "flex",
         justifyItems: "center",
         alignContent: "center",
-        height: '84px',
+        height: 84,
         background: 'rgba(255, 255, 255, 0.65)',
         boxShadow: '0px 4px 32px rgba(0, 114, 188, 0.2)',
         borderRadius: '10px',
@@ -20,7 +28,6 @@ const classes = {
         alignItems: "center",
         height: "100%",
         lineHeight: "22px",
-        padding: "10px",
         textAlign: "left"
     },
     value: {
@@ -44,14 +51,6 @@ const classes = {
         zIndex: "-1",
         transitionDuration: "200ms",
         opacity: "0.25",
-    },
-    KPI: {
-        position: "relative",
-        transitionDuration: '200ms',
-        textAlign: 'center',
-        "&:hover": {
-            transform: "scale(1.25)",
-        },
     },
 }
 const KPI = ({background, value, text}) => {

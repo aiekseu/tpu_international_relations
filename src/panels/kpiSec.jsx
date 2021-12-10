@@ -1,61 +1,66 @@
-import {Button, Grid, Typography,} from "@mui/material";
-import earth from  "../images/earth.png"
+import {Container, Grid, Typography,} from "@mui/material";
+import earth from "../images/earth.png"
 import icon from "../images/kpi_2.svg"
 import icon1 from "../images/kpi_1.svg"
 import icon2 from "../images/kpi_3.svg"
 import icon3 from "../images/kpi_4.svg"
-import GlobalData from "../stores/globalDataStore";
 import {observer} from "mobx-react-lite";
 import KPI from "../components/KPI";
 import rootStore from "../stores/rootStore";
-import ReactDOM from "react-dom";
-
+import styled from "@emotion/styled";
+import {LoadingButton} from "@mui/lab";
+import theme from "../utils/theme";
 
 const classes = {
-    headContainer: {
-        height: "600px",
+    root: {
+        minHeight: window.innerHeight - 48,
+        marginTop: 56,
+        paddingBottom: 16,
     },
-    head: {
-        marginTop: "5%",
-        marginLeft: "3%",
+    title: {
         fontFamily: "'Poppins', sans-serif",
         fontStyle: "normal",
         fontWeight: 'bold',
-        fontSize: '5rem',
+        fontSize: '4.5rem',
+        lineHeight: 1.25,
         color: '#55802B',
-        textShadow: '0px 4px 22px rgba(68, 94, 111, 0.1)',
+        background: "-webkit-linear-gradient(300deg, rgba(85,128,43,0.8) 0%, rgba(43,128,87,1) 60%, rgba(43,128,72,1) 100%)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent"
     },
-    mainContainer: {
-        position: "relative",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "300px",
-        width: "100%",
+    subtitle: {
+        marginTop: 2,
+        fontSize: '1.25rem'
     },
-    container: {
-        marginLeft: "1%",
-        marginRight: "1%",
+    earth: {
+        maxHeight: window.innerHeight * 0.6,
+        [theme.breakpoints.down('lg')]: {
+            display: 'none'
+        },
+        textAlign: 'center'
     },
-    background: {
-        objectFit: "cover",
-        objectPosition: "top",
-        position: "absolute",
-        zIndex: "-10",
-        width: "100%",
-        height: "400px",
-        bottom: "0",
-    },
-    button:{
-        width: 300,
-        fontWeight: 'bold',
-        fontSize: 14,
-        color: '#000000',
-        border: '2px solid #69BC00',
-        boxShadow: '0px 0px 20px rgba(138, 138, 138, 0.5)',
-        borderRadius: 10,
-    }
 }
+
+const SearchButton = styled(LoadingButton)(({theme}) => ({
+    borderRadius: 10,
+    borderColor: theme.palette.success.main,
+    borderWidth: 2,
+    padding: 5,
+    textTransform: 'none',
+    fontFamily: "'Poppins', sans-serif",
+    fontWeight: 600,
+    fontSize: '1.25rem',
+    color: '#5B5B5B',
+    boxShadow: "0px 0px 10px 0px rgba(50, 86, 52, 0.4)",
+    '&:hover': {
+        borderColor: theme.palette.success.main,
+        borderWidth: 2,
+        boxShadow: "0px 0px 12px 0px rgba(50, 106, 52, 0.4)",
+    },
+    marginTop: '36px',
+    marginBottom: '16px',
+    width: 300
+}));
 
 // Функция для корректного использования падежей
 function VValidator(value, str1, str2, str3) {
@@ -72,8 +77,6 @@ function VValidator(value, str1, str2, str3) {
     return ("Error in VValidator")
 }
 
-const globalData = new GlobalData();
-
 const KPIs = () => {
     const countriesNum = rootStore.kpiStore.kpi.countries_num;
     const annualAgreementsNum = rootStore.kpiStore.kpi.annual_agreements_num;
@@ -81,60 +84,69 @@ const KPIs = () => {
     const researchesNum = rootStore.kpiStore.kpi.researches_num;
 
     return (
-        <>
-            <Grid sx={classes.headContainer}
-                  container
-            >
-                <Grid item sx={classes.head} width={700}>
-                    Томский политех сегодня - это:
-                    <Typography style={{marginTop: 50}} width={500}>Университет, где ученые работают над передовыми исследованиями в крупных международных научных проектах, а студенты ежегодно участвуют в программах академической мобильности и проходят стажировки и практики в ведущих компаниях.</Typography>
-                    <Button variant="outlined" sx={classes.button} onClick={()=>{
-                        window.scrollTo({top: window.innerHeight+500, behavior: 'smooth'})}}>Поиск договоров</Button>
+        <div style={classes.root}>
+            <Container maxWidth='lg'>
+                <Grid container direction='row' justifyItems='end'>
+                    <Grid item md={12} lg={6} xl={7}>
+                        <Typography sx={classes.title}>Томский политех сегодня - это:</Typography>
+                        <Typography sx={classes.subtitle}>Университет, где ученые работают над передовыми исследованиями
+                            в крупных международных научных проектах, а студенты ежегодно участвуют в программах
+                            академической мобильности и проходят стажировки и практики в ведущих компаниях.</Typography>
+                        <SearchButton
+                            variant='outlined'
+                            loading={rootStore.globalDataStore.isFetching}
+                            onClick={async () => {
+                                window.scrollTo({top: window.innerHeight + 500, behavior: 'smooth'})
+                            }}
+                            TouchRippleProps={{style: {borderRadius: 8}}}
+                        >
+                            Поиск договоров
+                        </SearchButton>
+                    </Grid>
+                    <Grid item md={false} lg={6} xl={5} sx={classes.earth}>
+                        <img src={earth} alt='earth'/>
+                    </Grid>
                 </Grid>
-                <Grid item style={{marginLeft: 100,marginTop: 100, visibility: (window.innerWidth < 1290) ? 'hidden' : 'visible'}}>
-                    <img src={earth}/>
+            </Container>
+
+            <Grid
+                container
+                direction='row'
+                columnSpacing={2}
+                rowSpacing={6}
+                mt={7}
+            >
+                <Grid item xs={12} md={6} lg={3}>
+                    <KPI
+                        background={icon}
+                        value={countriesNum}
+                        text={"стран" + VValidator(countriesNum, "", "а", "ы") + ", с которыми заключены договоры"}
+                    />
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                    <KPI
+                        background={icon1}
+                        value={annualAgreementsNum}
+                        text={"договор" + VValidator(annualAgreementsNum, "ов", "", "а") + " за 2021г"}
+                    />
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                    <KPI
+                        background={icon2}
+                        value={companiesNum}
+                        text={"компан" + VValidator(researchesNum, "ий", "я", "ии") + " партнер" + VValidator(researchesNum, "ов", "", "а")}
+                    />
+
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                    <KPI
+                        background={icon3}
+                        value={researchesNum}
+                        text={"совместн" + VValidator(researchesNum, "ых", "е", "ых") + " исследован" + VValidator(researchesNum, "ий", "е", "ия")}
+                    />
                 </Grid>
             </Grid>
-
-            <div style={classes.mainContainer}>
-                <Grid
-                    container
-                    sx={classes.container}
-                    columnSpacing={2}
-                    rowSpacing={10}
-                >
-                    <Grid item xs={12} md={6} lg={3}>
-                        <KPI
-                            background={icon}
-                            value={countriesNum}
-                            text={"стран" + VValidator(countriesNum, "", "а", "ы") + ", с которыми заключены договоры"}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={3}>
-                        <KPI
-                            background={icon1}
-                            value={annualAgreementsNum}
-                            text={"договор" + VValidator(annualAgreementsNum, "ов", "", "а") + " за 2021г"}
-                        />
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={3}>
-                        <KPI
-                            background={icon2}
-                            value={companiesNum}
-                            text={"компан" + VValidator(researchesNum, "ий", "я", "ии") + " партнер" + VValidator(researchesNum,"ов","","а")}
-                        />
-
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={3}>
-                        <KPI
-                            background={icon3}
-                            value={researchesNum}
-                            text={"совместн" + VValidator(researchesNum, "ых", "е", "ых") + " исследован" + VValidator(researchesNum, "ий", "е", "ия")}
-                        />
-                    </Grid>
-                </Grid>
-            </div>
-        </>
+        </div>
     )
 }
 

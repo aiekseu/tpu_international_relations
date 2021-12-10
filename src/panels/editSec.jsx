@@ -1,19 +1,9 @@
 import {observer} from "mobx-react-lite";
-import {
-    Autocomplete,
-    Box,
-    Button,
-    Dialog,
-    DialogActions,
-    Paper,
-    Stack,
-    TextField,
-    Typography
-} from "@mui/material";
+import {Autocomplete, Box, Button, Dialog, DialogActions, Paper, Stack, TextField, Typography} from "@mui/material";
 import rootStore from "../stores/rootStore";
 import React from "react";
 import {toJS} from "mobx";
-import {Map, ObjectManager, Placemark, YMaps, ZoomControl} from "react-yandex-maps";
+import {Map, Placemark, YMaps} from "react-yandex-maps";
 
 const windowHeight = window.innerHeight;
 const windowWidth = window.innerWidth;

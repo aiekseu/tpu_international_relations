@@ -24,7 +24,7 @@ const classes = {
         left: 48,
     },
     searchAgreement: {
-        height: "15%",
+        height: 120,
     },
     searchAgreementText: {
         marginLeft: "3%",

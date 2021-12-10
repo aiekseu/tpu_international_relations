@@ -159,7 +159,7 @@ const AboutCompanyCard = observer(() => {
                             style={{
                                 overflow: 'scroll',
                                 overflowY: 'scroll',
-                                overflowX: 'none',
+                                overflowX: 'hidden',
                                 height: '100%'
                             }}
                         >

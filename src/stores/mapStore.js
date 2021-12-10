@@ -1,5 +1,4 @@
 import {makeAutoObservable} from "mobx";
-import rootStore from "./rootStore";
 
 class MapStore {
 

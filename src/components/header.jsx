@@ -1,14 +1,11 @@
 import React from "react";
-import {AppBar, Container, Grid, IconButton, Link, Toolbar, Typography} from "@mui/material";
+import {AppBar, Container, IconButton, Link, Toolbar, Typography} from "@mui/material";
 
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
-import tpuDarkIcon from "../images/tpuDarkLogo.svg";
-import navigationLine from '../images/navigationLine.svg'
-import navigationDotActive from '../images/navigationDotActive.svg'
-import navigationDotInactive from '../images/navigationDotInactive.svg'
+import tpuDarkIcon from "../images/tpuDarkLogo.png";
 
 import theme from "../utils/theme";
 
@@ -26,8 +23,7 @@ const classes = {
         justifyContent: "center",
         alignItems: "center",
     },
-    upperAppBarDate: {
-        color: 'white',
+    logo: {
         marginRight: theme.spacing(12),
         [theme.breakpoints.down('md')]: {
             marginRight: theme.spacing(4),
@@ -35,15 +31,33 @@ const classes = {
         [theme.breakpoints.down('sm')]: {
             marginRight: theme.spacing(2),
         },
+        paddingLeft: 0,
+        height: 32
+    },
+    upperAppBarDate: {
+        color: 'white',
+        marginRight: theme.spacing(12),
+        [theme.breakpoints.down('md')]: {
+            marginRight: theme.spacing(3),
+        },
+        [theme.breakpoints.down('sm')]: {
+            marginRight: theme.spacing(1),
+        },
         paddingLeft: 0
     },
     upperAppBarScheduleLink: {
         color: 'white',
         flexGrow: 1,
+        [theme.breakpoints.down('lg')]: {
+            display: 'none'
+        },
     },
     upperAppBarSearchButton: {
         marginRight: theme.spacing(2),
         color: 'white',
+        [theme.breakpoints.down('md')]: {
+            display: 'none'
+        },
     },
     upperAppBarLanguageButton: {
         marginRight: theme.spacing(2),
@@ -64,9 +78,6 @@ const classes = {
     },
     appBar: {
         backgroundColor: 'transparent',
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
     },
     title: {
         flexGrow: 1,
@@ -107,6 +118,7 @@ const Header = observer(() => {
             <Container sx={classes.upperAppBar} style={{padding: 0, maxWidth: '100%'}}>
                 <Container maxWidth='lg'>
                     <Toolbar variant='dense'>
+                        <img src={tpuDarkIcon} style={classes.logo} alt="ТПУ"/>
                         <Typography sx={classes.upperAppBarDate} variant='subtitle2'>
                             {rootStore.globalDataStore.todayDate}
                         </Typography>
@@ -138,47 +150,47 @@ const Header = observer(() => {
             </Container>
 
             {/* Нижний (зеленый) аппбар */}
-            <Container maxWidth='lg' sx={classes.appBar}>
-                <Toolbar>
-                    <img src={tpuDarkIcon} style={classes.menuButton} alt="ТПУ"/>
-                    <Typography sx={classes.title}>
-                        Международные связи ТПУ
-                    </Typography>
-                    <div>
-                        <Grid container direction='column' sx={classes.currentSection}>
-                            <Grid item>
-                                <Typography>
-                                    статистика
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography>
-                                    поиск договоров
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography>
-                                    новости
-                                </Typography>
-                            </Grid>
-                        </Grid>
-                    </div>
-                    <img src={navigationLine} style={classes.navigationLine} alt="ТПУ"/>
-                    <div>
-                        <Grid container direction='column' sx={classes.currentSection}>
-                            <Grid item>
-                                <img src={navigationDotActive} style={classes.navigationDot1}  alt="ТПУ"/>
-                            </Grid>
-                            <Grid item>
-                                <img src={navigationDotInactive} style={classes.navigationDot2} alt="ТПУ"/>
-                            </Grid>
-                            <Grid item>
-                                <img src={navigationDotInactive} style={classes.navigationDot3} alt="ТПУ"/>
-                            </Grid>
-                        </Grid>
-                    </div>
-                </Toolbar>
-            </Container>
+            {/*<Container maxWidth='lg' sx={classes.appBar}>*/}
+            {/*    <Toolbar>*/}
+            {/*        <img src={tpuDarkIcon} style={classes.logo} alt="ТПУ"/>*/}
+            {/*        <Typography sx={classes.title}>*/}
+            {/*            Международные связи ТПУ*/}
+            {/*        </Typography>*/}
+            {/*        <div>*/}
+            {/*            <Grid container direction='column' sx={classes.currentSection}>*/}
+            {/*                <Grid item>*/}
+            {/*                    <Typography>*/}
+            {/*                        статистика*/}
+            {/*                    </Typography>*/}
+            {/*                </Grid>*/}
+            {/*                <Grid item>*/}
+            {/*                    <Typography>*/}
+            {/*                        поиск договоров*/}
+            {/*                    </Typography>*/}
+            {/*                </Grid>*/}
+            {/*                <Grid item>*/}
+            {/*                    <Typography>*/}
+            {/*                        новости*/}
+            {/*                    </Typography>*/}
+            {/*                </Grid>*/}
+            {/*            </Grid>*/}
+            {/*        </div>*/}
+            {/*        <img src={navigationLine} style={classes.navigationLine} alt="ТПУ"/>*/}
+            {/*        <div>*/}
+            {/*            <Grid container direction='column' sx={classes.currentSection}>*/}
+            {/*                <Grid item>*/}
+            {/*                    <img src={navigationDotActive} style={classes.navigationDot1}  alt="ТПУ"/>*/}
+            {/*                </Grid>*/}
+            {/*                <Grid item>*/}
+            {/*                    <img src={navigationDotInactive} style={classes.navigationDot2} alt="ТПУ"/>*/}
+            {/*                </Grid>*/}
+            {/*                <Grid item>*/}
+            {/*                    <img src={navigationDotInactive} style={classes.navigationDot3} alt="ТПУ"/>*/}
+            {/*                </Grid>*/}
+            {/*            </Grid>*/}
+            {/*        </div>*/}
+            {/*    </Toolbar>*/}
+            {/*</Container>*/}
         </AppBar>
     );
 })

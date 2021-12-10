@@ -1,17 +1,18 @@
 import React from 'react';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import ViewQuiltIcon from '@mui/icons-material/ViewQuilt';
+import {ToggleButton, ToggleButtonGroup} from '@mui/material';
+
+import TableChartIcon from '@mui/icons-material/TableChart';
+import PieChartIcon from '@mui/icons-material/PieChart';
+
 import rootStore from "../stores/rootStore";
 
 
 const InfButtons = () => {
-    const [alignment, setAlignment] = React.useState("pieChart");
+    const [aboutCompanyInfoType, setAboutCompanyInfoType] = React.useState("pieChart");
 
-    const handleAlignment = (event, newAlignment) => {
-        if (newAlignment != null) {
-            setAlignment(newAlignment);
+    const handleAlignment = (event, newType) => {
+        if (newType != null) {
+            setAboutCompanyInfoType(newType);
             rootStore.aboutCompanyStore.changeIsCardChosen()
         }
     };
@@ -20,15 +21,15 @@ const InfButtons = () => {
         <ToggleButtonGroup
             color="standard"
             exclusive
-            value={alignment}
+            value={aboutCompanyInfoType}
             onChange={handleAlignment}
             style={{position: "absolute", right: 100, top: 48 }}
         >
             <ToggleButton value="table">
-                <ViewListIcon/>
+                <TableChartIcon/> {aboutCompanyInfoType === 'table' ? '' : ' Таблица'}
             </ToggleButton>
             <ToggleButton value="pieChart">
-                <ViewQuiltIcon/>
+                <PieChartIcon/> {aboutCompanyInfoType === 'pieChart' ? '' : ' Карточка'}
             </ToggleButton>
         </ToggleButtonGroup>
     )
