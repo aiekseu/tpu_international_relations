@@ -79,6 +79,21 @@ const Agreements = () => {
                                      rootStore.filtersStore.updateAgrType(null)
                                  }}
                         />
+                        <ChipBox text={rootStore.filtersStore.agrState.active ? "Действует" : ""}
+                                 onDelete={() => {
+                                     rootStore.filtersStore.agrState.active = false
+                                 }}
+                        />
+                        <ChipBox text={rootStore.filtersStore.agrState.expired ? "Истек" : ""}
+                                 onDelete={() => {
+                                     rootStore.filtersStore.agrState.expired = false
+                                 }}
+                        />
+                        <ChipBox text={rootStore.filtersStore.agrState.expiringSoon ? "Истекает" : ""}
+                                 onDelete={() => {
+                                     rootStore.filtersStore.agrState.expiringSoon = false
+                                 }}
+                        />
                     </Grid>
                     <InfButtons/>
                 </div>
