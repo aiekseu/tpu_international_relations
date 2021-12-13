@@ -63,7 +63,7 @@ const SearchButton = styled(LoadingButton)(({theme}) => ({
 }));
 
 // Функция для корректного использования падежей
-function VValidator(value, str1, str2, str3) {
+function VValidator(value, str1, str2, str3, onNull) {
     let lastDigit = value % 10;
     if ((lastDigit === 0) || (lastDigit > 4)) {
         return str1;//прим. "0 стран"
@@ -74,7 +74,7 @@ function VValidator(value, str1, str2, str3) {
     if (lastDigit < 5) {
         return str3;//прим. "2 страны"
     }
-    return ("")
+    return (onNull)
 }
 
 const KPIs = () => {
@@ -120,21 +120,21 @@ const KPIs = () => {
                     <KPI
                         background={icon}
                         value={countriesNum}
-                        text={"стран" + VValidator(countriesNum, "", "а", "ы") + ", с которыми заключены договоры"}
+                        text={"стран" + VValidator(countriesNum, "", "а", "ы", "ы") + ", с которыми заключены договоры"}
                     />
                 </Grid>
                 <Grid item xs={12} md={6} lg={3}>
                     <KPI
                         background={icon1}
                         value={annualAgreementsNum}
-                        text={"договор" + VValidator(annualAgreementsNum, "ов", "", "а") + " за 2021г"}
+                        text={"договор" + VValidator(annualAgreementsNum, "ов", "", "а", "ы") + " за 2021г"}
                     />
                 </Grid>
                 <Grid item xs={12} md={6} lg={3}>
                     <KPI
                         background={icon2}
                         value={companiesNum}
-                        text={"компан" + VValidator(researchesNum, "ий", "я", "ии") + " партнер" + VValidator(researchesNum, "ов", "", "а")}
+                        text={"компан" + VValidator(researchesNum, "ий", "я", "ии", "ии") + " партнер" + VValidator(researchesNum, "ов", "", "а", "ы")}
                     />
 
                 </Grid>
@@ -142,7 +142,7 @@ const KPIs = () => {
                     <KPI
                         background={icon3}
                         value={researchesNum}
-                        text={"совместн" + VValidator(researchesNum, "ых", "е", "ых") + " исследован" + VValidator(researchesNum, "ий", "е", "ия")}
+                        text={"совместн" + VValidator(researchesNum, "ых", "е", "ых", "е") + " исследован" + VValidator(researchesNum, "ий", "е", "ия", "ия")}
                     />
                 </Grid>
             </Grid>

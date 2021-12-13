@@ -1,4 +1,4 @@
-import {Container, Paper, Stack, Typography} from "@mui/material";
+import {Container, Paper, Stack, Typography, CircularProgress} from "@mui/material";
 
 const classes = {
     KPI: {
@@ -58,7 +58,7 @@ const KPI = ({background, value, text}) => {
         <Container sx={classes.KPI}>
             <Paper sx={classes.card} variant="contained">
                 <Stack direction="row">
-                    <Typography style={classes.value}>{value} </Typography>
+                    {(value != null) ? <Typography style={classes.value}>{value}</Typography> : <CircularProgress style={classes.value}/>}
                     <Typography style={classes.text}> {text} </Typography>
                 </Stack>
             </Paper>
